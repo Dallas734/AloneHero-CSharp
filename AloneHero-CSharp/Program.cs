@@ -9,8 +9,10 @@ namespace AloneHero_CSharp
     {
         static void Main(string[] args)
         {
-            var window = new SimpleWindow();
-            window.Run();
+            //var window = new SimpleWindow();
+            //window.Run();
+            Game game = new Game();
+            game.GameRunning();
         }
     }
 

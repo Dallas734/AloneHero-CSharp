@@ -16,23 +16,60 @@ namespace AloneHero_CSharp
             endGame = false;
         }
 
-        //public bool StartGame()
-        //{
-        //    RenderWindow window = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
-        //    Clock clock;
+        public bool StartGame()
+        {
+            RenderWindow window = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
+            Clock clock = new Clock();
 
-        //    // Инициализация уровней
+            // Инициализация уровней (на будущее)
+            List<Level> levels = new List<Level>();
+            levels.Add(new Level("map_XML_2.tmx"));
 
-        //}
+            // Карта
+            Level lvl = new Level("map_XML_2.tmx");
+
+            window.KeyPressed += Window_KeyPressed;
+
+            while (window.IsOpen)
+            {
+                // Время для анимации
+                float time = clock.ElapsedTime.AsMicroseconds();
+                clock.Restart();
+                time = time / 800;
+
+                window.DispatchEvents();
+
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Tab) || endGame)
+                    return true;
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) return false;
+
+                levels[0].Draw(window, time, this);
+            }
+
+            return false;
+        }
 
         public void GameRunning()
         {
-
+            if (StartGame())
+            {
+                endGame = false;
+                GameRunning();
+            }
         }
 
         public void SetEndGame(bool endGame)
         {
+            this.endGame = endGame;
+        }
 
+        private void Window_KeyPressed(object sender, SFML.Window.KeyEventArgs e)
+        {
+            var window = (SFML.Window.Window)sender;
+            if (e.Code == SFML.Window.Keyboard.Key.Escape)
+            {
+                window.Close();
+            }
         }
 
     }

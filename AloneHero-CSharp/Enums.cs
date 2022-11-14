@@ -19,6 +19,21 @@ namespace AloneHero_CSharp
         FALL,
         DEATH
     };
+
+    enum Codes
+    {
+        RUN_C,
+        DAMAGE_C,
+        IDLE_C,
+        FALL_C,
+        JUMP_C,
+        HIT_C,
+        CHANGE_X,
+        ENEMY_BARIER,
+        IMPROVE_STATS,
+        HEALTH_UP,
+        SPEED_UP
+    };
     class Enums
     {
         

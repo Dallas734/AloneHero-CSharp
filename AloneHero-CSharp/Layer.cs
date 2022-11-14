@@ -9,6 +9,10 @@ namespace AloneHero_CSharp
 {
     class Layer
     {
+        public Layer()
+        {
+            tiles = new List<Sprite>();
+        }
         public int opacity;
         public List<Sprite> tiles;
     }
