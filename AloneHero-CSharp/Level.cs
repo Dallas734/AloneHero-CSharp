@@ -12,8 +12,8 @@ namespace AloneHero_CSharp
     class Level
     {
         private Player player;
-        //private List<Enemy> enemies;
-        //private List<SupportItem> supportItems;
+        private List<Enemy> enemies;
+        private List<SupportItem> supportItems;
         private int width, height, tileWidth, tileHeight;
         private int firstTileID;
         private string fileNameTMX;
@@ -198,8 +198,8 @@ namespace AloneHero_CSharp
                         if (objectElement.GetAttribute("width") != null)
                         {
                             string atr = objectElement.GetAttribute("width");
-                            width = int.Parse(objectElement.GetAttribute("width"));
-                            height = int.Parse(objectElement.GetAttribute("height"));
+                            width = (int)Single.Parse(objectElement.GetAttribute("width"), CultureInfo.InvariantCulture);
+                            height = (int)Single.Parse(objectElement.GetAttribute("height"), CultureInfo.InvariantCulture);
                         }
                         else
                         {
@@ -235,12 +235,12 @@ namespace AloneHero_CSharp
                 view.Reset(new FloatRect(0, 0, 1200, 800));
             }
 
-            //FillEnemy("Skeleton");
-            //FillEnemy("Goblin");
-            //FillEnemy("Mushroom");
+            FillEnemy("Skeleton");
+            FillEnemy("Goblin");
+            FillEnemy("Mushroom");
 
-            //FillSupportItem("GreenPotion");
-            //FillSupportItem("RedPotion");
+            FillSupportItem("GreenPotion");
+            FillSupportItem("RedPotion");
 
             return true;
 
@@ -253,6 +253,10 @@ namespace AloneHero_CSharp
         public Level(string fileNameTMX)
         {
             layers = new List<Layer>();
+            objects = new List<ObjectLvl>();
+            enemies = new List<Enemy>();
+            supportItems = new List<SupportItem>();
+            view = new View();
             this.fileNameTMX = "Levels\\" + fileNameTMX;
             LoadFromFile(this.fileNameTMX);
             collisionWithPlayer = false;
@@ -271,11 +275,12 @@ namespace AloneHero_CSharp
 
         public List<ObjectLvl> GetObjects(string name)
         {
+            List<ObjectLvl> thisObjects = new List<ObjectLvl>();
             for (int i = 0; i < objects.Count; i++)
                 if (objects[i].name == name)
-                    objects.Add(objects[i]);
+                    thisObjects.Add(objects[i]);
 
-            return objects;
+            return thisObjects;
         }
 
         public List<ObjectLvl> GetAllObjects()
@@ -337,18 +342,6 @@ namespace AloneHero_CSharp
             view.Center = new Vector2f((float)tempX, (float)tempY);
         }
 
-        //void Level::FillSupportItem(std::string nameOfSupportItem)
-        //{
-        //    std::vector<Object> supportObjects = GetObjects(nameOfSupportItem);
-        //    for (int i = 0; i < supportObjects.size(); i++)
-        //    {
-        //        SupportItem* supportItem;
-        //        if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObjects[i].rect.left, supportObjects[i].rect.top, 0.1);
-        //        else if (nameOfSupportItem == "RedPotion") supportItem = new RedPotion(supportObjects[i].rect.left, supportObjects[i].rect.top, 20);
-        //        this->supportItems.push_back(supportItem);
-        //    }
-        //}
-
         public void GetMessage(Message message)
         {
             Message messageToEnemy;
@@ -388,105 +381,112 @@ namespace AloneHero_CSharp
                             }
                         }
 
-                        //if (obj[i].name == "enemyBarier" && typeid(*(message.sender)) == typeid(Enemy))
-                        //{
-                        //    messageToEnemy = new Message(ENEMY_BARIER, 0, nullptr);
-                        //    message.sender->GetMessage(*messageToEnemy);
-                        //}
+                        if (obj[i].name == "enemyBarier" && message.sender is Enemy)
+                        {
+                            messageToEnemy = new Message(Codes.ENEMY_BARIER, 0, null);
+                            message.sender.GetMessage(messageToEnemy);
+                        }
                     }
                 }
             }
 
             // Игрок
-            //if (message.sender is Player)
-            //{
-            //    if (message.code == Codes.HIT_C)
-            //    {
-            //        for (int i = 0; i < enemies.size(); i++)
-            //        {
-            //            Enemy* enemy = &enemies[i];
-            //            if (player->getHitRect().intersects(enemy->getRect()) && enemy->collisionWithPlayer == false && player->GetDY() == 0 && player->GetState() == HIT && enemy->GetState() != HIT && ((player->GetDirection() == LEFT && player->GetX() > enemy->GetX()) || (player->GetDirection() == RIGHT && player->GetX() < enemy->GetX())))
-            //            {
-            //                messageToEnemy = new Message(DAMAGE_C, player->GetStrength(), nullptr);
-            //                enemy->GetMessage(*messageToEnemy);
-            //                return;
-            //            }
-            //            else if (enemy->collisionWithPlayer && player->GetState() != HIT && player->GetDY() == 0 && enemy->GetState() == DAMAGE)
-            //            {
-            //                messageToEnemy = new Message(RUN_C, 0, nullptr);
-            //                enemy->GetMessage(*messageToEnemy);
-            //                return;
-            //            }
-            //        }
-            //    }
+            if (message.sender is Player)
+            {
+                if (message.code == Codes.HIT_C)
+                {
+                    foreach (Enemy enemy in enemies)
+                    {
+                        if (player.GetHitRect().Intersects(enemy.GetRect()) && enemy.CollisionWithPlayer == false && player.Dy == 0 && player.State == States.HIT && enemy.State != States.HIT && ((player.Direction == Directions.LEFT && player.X > enemy.X) || (player.Direction == Directions.RIGHT && player.X < enemy.X)))
+                        {
+                            messageToEnemy = new Message(Codes.DAMAGE_C, player.Strength, null);
+                            enemy.GetMessage(messageToEnemy);
+                            return;
+                        }
+                        
+                    }
+                }
 
-            //    if (message.code == Codes.RUN_C)
-            //    {
-            //        for (int i = 0; i < supportItems.size(); i++)
-            //        {
-            //            SupportItem* supportItem = supportItems[i];
-            //            if (player->getRect().intersects(supportItems[i]->getRect()))
-            //            {
-            //                messageToItem = new Message(IMPROVE_STATS, 0, player);
-            //                supportItem->GetMessage(*messageToItem);
-            //            }
-            //        }
-            //    }
-            //}
+                if (message.code == Codes.RUN_C)
+                {
+                    foreach (SupportItem supportItem in supportItems)
+                    {
+                        if (player.GetRect().Intersects(supportItem.GetRect()))
+                        {
+                            messageToItem = new Message(Codes.IMPROVE_STATS, 0, player);
+                            supportItem.GetMessage(messageToItem);
+                        }
+                    }
+                }
+            }
 
             // Враг
-            //if (typeid(*(message.sender)) == typeid(Enemy))
-            //{
-            //    Enemy* enemy = (Enemy*)message.sender;
-            //    if (message.code == RUN_C)
-            //    {
-            //        if (enemy->getRect().intersects(player->getRect()))
-            //        {
-            //            int a = 0;
-            //        }
+            if (message.sender is Enemy)
+            {
+                Enemy enemy = (Enemy)message.sender;
+                if (message.code == Codes.RUN_C)
+                {
+                    if (enemy.CollisionWithPlayer && player.State != States.HIT && enemy.State == States.DAMAGE)
+                    {
+                        messageToEnemy = new Message(Codes.RUN_C, 0, null);
+                        enemy.GetMessage(messageToEnemy);
+                        return;
+                    }
 
-            //        if (enemy->getRect().intersects(player->getRect()) && enemy->collisionWithPlayer == false && player->GetDY() == 0 && player->GetState() != HIT)
-            //        {
-            //            messageToEnemy = new Message(HIT_C, 0, nullptr);
-            //            messageToPlayer = new Message(DAMAGE_C, enemy->GetStrength(), nullptr);
-            //            enemy->GetMessage(*messageToEnemy);
-            //            player->GetMessage(*messageToPlayer);
-            //            return;
-            //        }
-            //        else if (enemy->collisionWithPlayer && enemy->GetState() == RUN && player->GetDY() == 0)
-            //        {
-            //            if (!enemy->getRect().intersects(player->getRect()))
-            //            {
-            //                messageToEnemy = new Message(RUN_C, 0, nullptr);
-            //                enemy->GetMessage(*messageToEnemy);
-            //                /*enemy->collisionWithPlayer = false;*/
-            //            }
-            //            if (enemy->collisionWithPlayer && player->GetState() != RUN && player->GetState() != HIT)
-            //            {
-            //                messageToPlayer = new Message(IDLE_C, 0, nullptr);
-            //                player->GetMessage(*messageToPlayer);
-            //                /*player->SetState(IDLE);*/
-            //            }
-            //            return;
-            //        }
+                    if (enemy.GetRect().Intersects(player.GetRect()) && enemy.CollisionWithPlayer == false && player.Dy == 0 && player.State != States.HIT)
+                    {
+                        messageToEnemy = new Message(Codes.HIT_C, 0, null);
+                        messageToPlayer = new Message(Codes.DAMAGE_C, enemy.Strength, null);
+                        enemy.GetMessage(messageToEnemy);
+                        player.GetMessage(messageToPlayer);
+                        return;
+                    }
+                    else if (enemy.CollisionWithPlayer && enemy.State == States.RUN && player.Dy == 0)
+                    {
+                        if (!enemy.GetRect().Intersects(player.GetRect()))
+                        {
+                            messageToEnemy = new Message(Codes.RUN_C, 0, null);
+                            enemy.GetMessage(messageToEnemy);
+                            /*enemy->collisionWithPlayer = false;*/
+                        }
+                        if (enemy.CollisionWithPlayer && player.State != States.RUN && player.State != States.HIT)
+                        {
+                            messageToPlayer = new Message(Codes.IDLE_C, 0, null);
+                            player.GetMessage(messageToPlayer);
+                            /*player->SetState(IDLE);*/
+                        }
+                        return;
+                    }
 
-            //    }
-            //}
+                }
+            }
 
-            //void Level::FillEnemy(std::string nameOfEnemy)
-            //{
-            //    std::vector<Object> enemyObjects = GetObjects(nameOfEnemy);
-            //    for (int i = 0; i < enemyObjects.size(); i++)
-            //    {
-            //        Enemy* enemy = nullptr;
-            //        if (nameOfEnemy == "Mushroom") enemy = new Mushroom(enemyObjects[i].rect.left, enemyObjects[i].rect.top, 0.08, 100, 50);
-            //        else if (nameOfEnemy == "Skeleton") enemy = new Skeleton(enemyObjects[i].rect.left, enemyObjects[i].rect.top, 0.08, 300, 50);
-            //        else if (nameOfEnemy == "Goblin") enemy = new Goblin(enemyObjects[i].rect.left, enemyObjects[i].rect.top, 0.08, 200, 50);
-            //        this->enemies.push_back(*enemy);
-            //    }
-            //}
+        }
 
+        private void FillEnemy(string nameOfEnemy)
+        {
+            List<ObjectLvl> enemyObjects = GetObjects(nameOfEnemy);
+            for (int i = 0; i < enemyObjects.Count; i++)
+            {
+                Enemy enemy = null;
+                if (nameOfEnemy == "Mushroom") enemy = new Mushroom(enemyObjects[i].rect.Left, enemyObjects[i].rect.Top, 0.08, 300, 50);
+                else if (nameOfEnemy == "Skeleton") enemy = new Skeleton(enemyObjects[i].rect.Left, enemyObjects[i].rect.Top, 0.08, 300, 50);
+                else if (nameOfEnemy == "Goblin") enemy = new Goblin(enemyObjects[i].rect.Left, enemyObjects[i].rect.Top, 0.08, 300, 50);
 
+                enemies.Add(enemy);
+            }
+        }
+
+        public void FillSupportItem(string nameOfSupportItem)
+        {
+            List<ObjectLvl> supportObjects = GetObjects(nameOfSupportItem);
+            foreach (ObjectLvl supportObject in supportObjects)
+            {
+                SupportItem supportItem = null;
+                if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObject.rect.Left, supportObject.rect.Top, 0.1);
+                else if (nameOfSupportItem == "RedPotion") supportItem = new RedPotion(supportObject.rect.Left, supportObject.rect.Top, 20);
+                supportItems.Add(supportItem);
+            }
         }
 
         public void Draw(RenderWindow window, float time, Game game)
@@ -499,27 +499,28 @@ namespace AloneHero_CSharp
             }
 
             // Проходимся по всем врагам
-            //for (std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end();)
-            //{
-            //    it->Update(time, window, this);
-            //    if (it->GetState() == DEATH)
-            //    {
-            //        it = enemies.erase(it);
-            //    }
-            //    else it++;
-            //    //window.draw(enemies[i].GetSprite(enemies[i].GetState()));
-            //}
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Update(time, window, this);
+                if (enemy.State == States.DEATH)
+                {
+                    enemies.Remove(enemy);
+                    return;
+                }
+                //window.Draw(enemy.GetSprite(enemy.State));
+            }
+            
 
             // Проходимся по предметам поддержки
-            //for (std::vector<SupportItem*>::iterator it = supportItems.begin(); it != supportItems.end();)
-            //{
-            //    (*it)->Update(time, window);
-            //    if ((*it)->GetUsed())
-            //    {
-            //        it = supportItems.erase(it);
-            //    }
-            //    else it++;
-            //}
+            foreach (SupportItem supportItem in supportItems)
+            {
+                supportItem.Update(time, window);
+                if (supportItem.Used)
+                {
+                    supportItems.Remove(supportItem);
+                    return;
+                }
+            }
 
             // Отрисовка
             window.SetView(view);
@@ -532,19 +533,19 @@ namespace AloneHero_CSharp
                     window.Draw(layers[layer].tiles[tile]);
 
             // Рисуем персонажа
-            window.Draw(player.GetSprite(player.State));
+             window.Draw(player.GetSprite(player.State));
 
             // Рисуем врагов
-            //for (int i = 0; i < enemies.size(); i++)
-            //{
-            //    window.draw(enemies[i].GetSprite(enemies[i].GetState()));
-            //}
+            foreach (Enemy enemy in enemies)
+            {
+                window.Draw(enemy.GetSprite(enemy.State));
+            }
 
             // Рисуем предметы поддержки
-            //for (int i = 0; i < supportItems.size(); i++)
-            //{
-            //    window.draw(supportItems[i]->GetSprite());
-            //}
+            foreach (SupportItem supportItem in supportItems)
+            {
+                window.Draw(supportItem.Sprite);
+            }
 
             window.Display();
         }

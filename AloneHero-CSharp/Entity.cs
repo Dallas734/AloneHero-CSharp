@@ -30,7 +30,7 @@ namespace AloneHero_CSharp
         protected int xBeginSprite;
         protected int yBeginSprite;
         protected int widthOfHit;
-        protected double heightOfHit;
+        protected int heightOfHit;
         protected Dictionary <States, int> countFrames;
         protected double xBeginSpriteHit;
         protected double yBeginSpriteHit;
@@ -45,6 +45,8 @@ namespace AloneHero_CSharp
 
         public Entity(double x, double y, double speed, int health, int strength)
         {
+            countFrames = new Dictionary<States, int>();
+            sprites = new Dictionary<States, Sprite>();
             X = x;
             Y = y;
             Speed = speed;
@@ -134,7 +136,6 @@ namespace AloneHero_CSharp
 
         protected States Hit(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, int bufOfHit, Directions direction)
         {
-            SetSprite("Hit.png", States.HIT, xBeginSprite, yBeginSprite, width, height);
             currentFrame += time * 0.01;
             if (currentFrame > frames)
             {
@@ -165,7 +166,7 @@ namespace AloneHero_CSharp
 
         protected States Damage(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, int damage, Directions direction)
         {
-            SetSprite("Damage.png", States.DAMAGE, xBeginSprite, yBeginSprite, width, height);
+            //SetSprite("Damage.png", States.DAMAGE, xBeginSprite, yBeginSprite, width, height);
             currentFrame += time * 0.005;
             if (currentFrame > frames)
             {
@@ -187,7 +188,7 @@ namespace AloneHero_CSharp
             }
 
             sprites[States.DAMAGE].TextureRect = new IntRect(xBeginSprite + (width + bufWidth) * (int)currentFrame, yBeginSprite, width, height);
-            sprites[States.HIT].Position = new Vector2f((float)X, (float)Y);
+            sprites[States.DAMAGE].Position = new Vector2f((float)X, (float)Y);
 
             return States.DAMAGE;
         }
@@ -196,7 +197,7 @@ namespace AloneHero_CSharp
         {
             Message message;
 
-            SetSprite("Run.png", States.RUN, xBeginSprite, yBeginSprite, width, height);
+            //SetSprite("Run.png", States.RUN, xBeginSprite, yBeginSprite, width, height);
             if (direction == Directions.RIGHT && OnGround)
             {
                 Dx = Speed;
@@ -236,7 +237,7 @@ namespace AloneHero_CSharp
 
         protected States Idle(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, Directions direction)
         {
-            SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, width, height);
+            //SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, width, height);
             currentFrame += time * 0.005;
             if (currentFrame > frames)
             {
@@ -264,7 +265,7 @@ namespace AloneHero_CSharp
 
         protected States Death(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, Directions direction)
         {
-            SetSprite("Death.png", States.DEATH, xBeginSprite, yBeginSprite, width, height);
+            //SetSprite("Death.png", States.DEATH, xBeginSprite, yBeginSprite, width, height);
 
             currentFrame += time * 0.01;
             if (currentFrame > frames)

@@ -11,8 +11,9 @@ namespace AloneHero_CSharp
 {
     class Player : Entity 
     {
-        public Player(double x, double y) : base(x, y, 0.1, 100, 100)
+        public Player(double x, double y) : base(x, y, 0.1, 300, 100)
         {
+            sprites[States.DAMAGE] = null;
             directory = "Player\\";
             State = States.FALL;
             Width = 42;
@@ -29,6 +30,11 @@ namespace AloneHero_CSharp
             countFrames[States.JUMP] = 2;
             countFrames[States.FALL] = 2;
             countFrames[States.DEATH] = 6;
+            SetSprite("Damage.png", States.DAMAGE, xBeginSprite, yBeginSprite, Width, Height);
+            SetSprite("Death.png", States.DEATH, xBeginSprite, yBeginSprite, Width, Height);
+            SetSprite("Hit.png", States.HIT, xBeginSprite, yBeginSprite, widthOfHit, Height);
+            SetSprite("Run.png", States.RUN, xBeginSprite, yBeginSprite, Width, Height);
+            SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, Width, Height);
         }
 
         public void HealthUp(int regenerationUnits)
@@ -74,13 +80,9 @@ namespace AloneHero_CSharp
                 }
                 if (State == States.JUMP)
                 {
+                    Direction = Directions.RIGHT;
                     Dx = Speed;
                     X += Dx * time;
-                    message = new Message(Codes.RUN_C, 0, this, X,  Y, Dx, 0);
-                    level.GetMessage(message);
-                    sprites[States.JUMP].Origin = new Vector2f(0, 0);
-                    sprites[States.JUMP].Scale = new Vector2f(1, 1);
-                    Dx = 0;
                 }
             }
             else if (Keyboard.IsKeyPressed(Keyboard.Key.A))
@@ -94,13 +96,9 @@ namespace AloneHero_CSharp
                 }
                 if (State == States.JUMP)
                 {
+                    Direction = Directions.LEFT;
                     Dx = -Speed;
                     X += Dx * time;
-                    message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
-                    level.GetMessage(message);
-                    sprites[States.JUMP].Origin = new Vector2f(sprites[States.JUMP].GetLocalBounds().Width, 0);
-                    sprites[States.JUMP].Scale = new Vector2f(-1, 1);
-                    Dx = 0;
                 }
             }
             else if (Keyboard.IsKeyPressed(Keyboard.Key.Right) && OnGround)
@@ -204,7 +202,7 @@ namespace AloneHero_CSharp
             }
             else if (direction == Directions.LEFT)
             {
-                sprites[States.FALL].Origin = new Vector2f(sprites[States.HIT].GetLocalBounds().Width, 0);
+                sprites[States.FALL].Origin = new Vector2f(sprites[States.FALL].GetLocalBounds().Width, 0);
                 sprites[States.FALL].Scale = new Vector2f(-1, 1);
                 State = States.FALL;
             }
@@ -232,6 +230,21 @@ namespace AloneHero_CSharp
             SetSprite("Jump.png", States.JUMP, xBeginSprite, yBeginSprite, width, height);
             currentFrame += time * 0.01;
             if (currentFrame > frames) currentFrame -= frames;
+
+            if (Direction == Directions.RIGHT)
+            {
+                Message message = new Message(Codes.RUN_C, 0, this, X,  Y, Dx, 0);
+                level.GetMessage(message);
+                sprites[States.JUMP].Origin = new Vector2f(0, 0);
+                sprites[States.JUMP].Scale = new Vector2f(1, 1);
+            }
+            else if (Direction == Directions.LEFT)
+            {
+                Message message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
+                level.GetMessage(message);
+                sprites[States.JUMP].Origin = new Vector2f(sprites[States.JUMP].GetLocalBounds().Width, 0);
+                sprites[States.JUMP].Scale = new Vector2f(-1, 1);
+            }
 
             if (OnGround)
             {
