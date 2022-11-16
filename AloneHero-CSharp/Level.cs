@@ -210,12 +210,12 @@ namespace AloneHero_CSharp
 
                         // Экземпляр объекта
                         ObjectLvl objectlvl = new ObjectLvl();
-                        objectlvl.name = objectName;
-                        objectlvl.type = objectType;
-                        objectlvl.sprite = sprite;
+                        objectlvl.Name = objectName;
+                        objectlvl.Type = objectType;
+                        objectlvl.Sprite = sprite;
 
                         FloatRect objectRect = new FloatRect(x, y, width, height);
-                        objectlvl.rect = objectRect;
+                        objectlvl.Rect = objectRect;
 
                         objects.Add(objectlvl);
 
@@ -231,7 +231,7 @@ namespace AloneHero_CSharp
             ObjectLvl playerObject = GetObject("Player");
             if (player == null)
             {
-                player = new Player(playerObject.rect.Left, playerObject.rect.Top);
+                player = new Player(playerObject.Rect.Left, playerObject.Rect.Top);
                 view.Reset(new FloatRect(0, 0, 1200, 800));
             }
 
@@ -267,7 +267,7 @@ namespace AloneHero_CSharp
         public ObjectLvl GetObject(string name)
         {
             for (int i = 0; i < objects.Count; i++)
-                if (objects[i].name == name)
+                if (objects[i].Name == name)
                     return objects[i];
 
             return new ObjectLvl();
@@ -277,7 +277,7 @@ namespace AloneHero_CSharp
         {
             List<ObjectLvl> thisObjects = new List<ObjectLvl>();
             for (int i = 0; i < objects.Count; i++)
-                if (objects[i].name == name)
+                if (objects[i].Name == name)
                     thisObjects.Add(objects[i]);
 
             return thisObjects;
@@ -355,33 +355,33 @@ namespace AloneHero_CSharp
             {
                 for (int i = 0; i < obj.Count; i++)
                 {
-                    if (message.sender.GetRect().Intersects(obj[i].rect))
+                    if (message.sender.GetRect().Intersects(obj[i].Rect))
                     {
-                        if (obj[i].name == "Solid")
+                        if (obj[i].Name == "Solid")
                         {
                             if (message.dy > 0)
                             {
-                                messageToSomeone = new Message(Codes.FALL_C, 0, null, 0, obj[i].rect.Top - message.sender.Height, 0, 0);
+                                messageToSomeone = new Message(Codes.FALL_C, 0, null, 0, obj[i].Rect.Top - message.sender.Height, 0, 0);
                                 message.sender.GetMessage(messageToSomeone);
                             }
                             if (message.dy < 0)
                             {
-                                messageToSomeone = new Message(Codes.JUMP_C, 0, null, 0, obj[i].rect.Top + obj[i].rect.Height, 0, 0);
+                                messageToSomeone = new Message(Codes.JUMP_C, 0, null, 0, obj[i].Rect.Top + obj[i].Rect.Height, 0, 0);
                                 message.sender.GetMessage(messageToSomeone);
                             }
                             if (message.dx > 0)
                             {
-                                messageToSomeone = new Message(Codes.CHANGE_X, 0, null, obj[i].rect.Left - message.sender.Width, 0, 0, 0);
+                                messageToSomeone = new Message(Codes.CHANGE_X, 0, null, obj[i].Rect.Left - message.sender.Width, 0, 0, 0);
                                 message.sender.GetMessage(messageToSomeone);
                             }
                             if (message.dx < 0)
                             {
-                                messageToSomeone = new Message(Codes.CHANGE_X, 0, null, obj[i].rect.Left + obj[i].rect.Width, 0, 0, 0);
+                                messageToSomeone = new Message(Codes.CHANGE_X, 0, null, obj[i].Rect.Left + obj[i].Rect.Width, 0, 0, 0);
                                 message.sender.GetMessage(messageToSomeone);
                             }
                         }
 
-                        if (obj[i].name == "enemyBarier" && message.sender is Enemy)
+                        if (obj[i].Name == "enemyBarier" && message.sender is Enemy)
                         {
                             messageToEnemy = new Message(Codes.ENEMY_BARIER, 0, null);
                             message.sender.GetMessage(messageToEnemy);
@@ -469,9 +469,9 @@ namespace AloneHero_CSharp
             for (int i = 0; i < enemyObjects.Count; i++)
             {
                 Enemy enemy = null;
-                if (nameOfEnemy == "Mushroom") enemy = new Mushroom(enemyObjects[i].rect.Left, enemyObjects[i].rect.Top, 0.08, 300, 50);
-                else if (nameOfEnemy == "Skeleton") enemy = new Skeleton(enemyObjects[i].rect.Left, enemyObjects[i].rect.Top, 0.08, 300, 50);
-                else if (nameOfEnemy == "Goblin") enemy = new Goblin(enemyObjects[i].rect.Left, enemyObjects[i].rect.Top, 0.08, 300, 50);
+                if (nameOfEnemy == "Mushroom") enemy = new Mushroom(enemyObjects[i].Rect.Left, enemyObjects[i].Rect.Top, 0.08, 300, 50);
+                else if (nameOfEnemy == "Skeleton") enemy = new Skeleton(enemyObjects[i].Rect.Left, enemyObjects[i].Rect.Top, 0.08, 300, 50);
+                else if (nameOfEnemy == "Goblin") enemy = new Goblin(enemyObjects[i].Rect.Left, enemyObjects[i].Rect.Top, 0.08, 300, 50);
 
                 enemies.Add(enemy);
             }
@@ -483,8 +483,8 @@ namespace AloneHero_CSharp
             foreach (ObjectLvl supportObject in supportObjects)
             {
                 SupportItem supportItem = null;
-                if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObject.rect.Left, supportObject.rect.Top, 0.1);
-                else if (nameOfSupportItem == "RedPotion") supportItem = new RedPotion(supportObject.rect.Left, supportObject.rect.Top, 20);
+                if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObject.Rect.Left, supportObject.Rect.Top, 0.1);
+                else if (nameOfSupportItem == "RedPotion") supportItem = new RedPotion(supportObject.Rect.Left, supportObject.Rect.Top, 20);
                 supportItems.Add(supportItem);
             }
         }

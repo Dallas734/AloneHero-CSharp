@@ -11,21 +11,21 @@ namespace AloneHero_CSharp
 {
     abstract class Entity
     {
-        public double Speed { get; set; }
-        public double Dx { get; set; }
-        public double Dy { get; set; }
-        public  double X { get; set; }
-        public double Y { get; set; }
+        public double Speed { get; protected set; }
+        public double Dx { get; protected set; }
+        public double Dy { get; protected set; }
+        public  double X { get; protected set; }
+        public double Y { get; protected set; }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; protected set; }
+        public int Height { get; protected set; }
         protected int bufWidth; // Буферная ширина для вырезания спрайтов 
         protected int bufOfHit;
         protected double currentFrame; // Текущий кадр
-        protected int Health { get; set; } // Здоровье
+        public int Health { get; protected set; } // Здоровье
         public int Strength { get; } // Сила
-        public int DamagePr { get;  set; } // Полученный урон
-        public bool OnGround { get; set; }
+        public int DamagePr { get;  protected set; } // Полученный урон
+        public bool OnGround { get; protected set; }
 
         protected int xBeginSprite;
         protected int yBeginSprite;

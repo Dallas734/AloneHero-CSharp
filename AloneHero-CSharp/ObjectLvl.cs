@@ -9,10 +9,10 @@ namespace AloneHero_CSharp
 {
     class ObjectLvl
     {
-        public string name;
-        public string type;
-        public FloatRect rect;
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public FloatRect Rect { get; set; }
         public Dictionary<string, string> properties;
-        public Sprite sprite;
+        public Sprite Sprite { get; set; }
     }
 }
