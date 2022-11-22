@@ -47,12 +47,12 @@ namespace AloneHero_CSharp
                 level.GetMessage(message);
             }
 
-            if (State == States.DAMAGE)
+            if (State == States.DAMAGE && Health > 0)
             {
                 Damage(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.DAMAGE], DamagePr, Direction);
             }
 
-            if (Health < 0)
+            if (Health <= 0 || State == States.DEATH)
             {
                 Death(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.DEATH], Direction);
             }

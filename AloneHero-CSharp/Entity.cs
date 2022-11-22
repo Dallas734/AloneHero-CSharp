@@ -17,6 +17,8 @@ namespace AloneHero_CSharp
         public  double X { get; protected set; }
         public double Y { get; protected set; }
 
+        public int Counter { get; set; }
+
         public int Width { get; protected set; }
         public int Height { get; protected set; }
         protected int bufWidth; // Буферная ширина для вырезания спрайтов 
@@ -57,6 +59,7 @@ namespace AloneHero_CSharp
             Dx = 0;
             Dy = 0;
             OnGround = false;
+            Counter = 0;
         }
 
         public abstract void Update(float time, RenderWindow window, Level level);
@@ -190,6 +193,12 @@ namespace AloneHero_CSharp
             sprites[States.DAMAGE].TextureRect = new IntRect(xBeginSprite + (width + bufWidth) * (int)currentFrame, yBeginSprite, width, height);
             sprites[States.DAMAGE].Position = new Vector2f((float)X, (float)Y);
 
+            //if (Health <= 0)
+            //{
+            //    State = States.DEATH;
+            //    return States.DEATH;
+            //}
+            //else 
             return States.DAMAGE;
         }
 
@@ -270,8 +279,10 @@ namespace AloneHero_CSharp
             currentFrame += time * 0.01;
             if (currentFrame > frames)
             {
+                Counter++;
                 currentFrame -= frames;
                 State = States.DEATH;
+                
             }
 
             if (direction == Directions.RIGHT)

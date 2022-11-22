@@ -397,7 +397,7 @@ namespace AloneHero_CSharp
                 {
                     foreach (Enemy enemy in enemies)
                     {
-                        if (player.GetHitRect().Intersects(enemy.GetRect()) && enemy.CollisionWithPlayer == false && player.Dy == 0 && player.State == States.HIT && enemy.State != States.HIT && ((player.Direction == Directions.LEFT && player.X > enemy.X) || (player.Direction == Directions.RIGHT && player.X < enemy.X)))
+                        if (player.GetHitRect().Intersects(enemy.GetRect()) && enemy.CollisionWithPlayer == false && player.Dy == 0 && player.State == States.HIT && enemy.State != States.HIT && ((player.Direction == Directions.LEFT && player.X > enemy.X) || (player.Direction == Directions.RIGHT && player.X < enemy.X)) && enemy.State != States.DEATH)
                         {
                             messageToEnemy = new Message(Codes.DAMAGE_C, player.Strength, null);
                             enemy.GetMessage(messageToEnemy);
@@ -502,14 +502,17 @@ namespace AloneHero_CSharp
             foreach (Enemy enemy in enemies)
             {
                 enemy.Update(time, window, this);
-                if (enemy.State == States.DEATH)
+                
+                //window.Draw(enemy.GetSprite(enemy.State));
+            }
+            foreach (Enemy enemy in enemies)
+            {
+                if (enemy.State == States.DEATH && enemy.Counter > 1)
                 {
                     enemies.Remove(enemy);
                     return;
                 }
-                //window.Draw(enemy.GetSprite(enemy.State));
             }
-            
 
             // Проходимся по предметам поддержки
             foreach (SupportItem supportItem in supportItems)
@@ -540,6 +543,14 @@ namespace AloneHero_CSharp
             {
                 window.Draw(enemy.GetSprite(enemy.State));
             }
+            //foreach (Enemy enemy in enemies)
+            //{
+            //    if (enemy.State == States.DEATH)
+            //    {
+            //        enemies.Remove(enemy);
+            //        return;
+            //    }
+            //}
 
             // Рисуем предметы поддержки
             foreach (SupportItem supportItem in supportItems)
