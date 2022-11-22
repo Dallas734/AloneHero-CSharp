@@ -40,7 +40,10 @@ namespace AloneHero_CSharp
                 window.DispatchEvents();
 
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Tab) || endGame)
+                {
+                    window.Close();
                     return true;
+                }
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) return false;
 
                 levels[0].Draw(window, time, this);
