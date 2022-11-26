@@ -63,7 +63,7 @@ namespace AloneHero_CSharp
         }
 
         public abstract void Update(float time, RenderWindow window, Level level);
-        public abstract States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, Directions direction, RenderWindow window, Level level);
+        public abstract States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames);
         public abstract void GetMessage(Message message);
         public Sprite GetSprite(States spriteName)
         {
@@ -170,11 +170,13 @@ namespace AloneHero_CSharp
         protected States Damage(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, int damage, Directions direction)
         {
             //SetSprite("Damage.png", States.DAMAGE, xBeginSprite, yBeginSprite, width, height);
+            Health -= DamagePr;
+            DamagePr = 0;
             currentFrame += time * 0.005;
             if (currentFrame > frames)
             {
                 currentFrame -= frames;
-                Health -= damage;
+                //Health -= DamagePr;
             }
 
             if (direction == Directions.RIGHT)

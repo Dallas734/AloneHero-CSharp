@@ -30,13 +30,13 @@ namespace AloneHero_CSharp
             fileName = "Images\\Potions\\PotionsPack1.png";
             up = true;
             Used = false;
+            image = new Image(fileName);
+            texture = new Texture(image);
+            Sprite = new Sprite(texture);   
         }
 
         public void Update(float time, RenderWindow window)
         {
-            image = new Image(fileName);
-            texture = new Texture(image);
-            Sprite = new Sprite(texture);
             Sprite.TextureRect = new IntRect(xBeginSprite, yBeginSprite, width, height);
 
             if (y <= beginY + 10 && up == false)

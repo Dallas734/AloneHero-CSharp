@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SFML.Graphics;
-using SFML.Window;
+﻿using SFML.Graphics;
 using SFML.System;
-using SFML;
-using SFML.Audio;
+using SFML.Window;
+using System;
 
 namespace AloneHero_CSharp
 {
-    class Player : Entity 
+    class Player : Entity
     {
-        public Player(double x, double y) : base(x, y, 0.1, 300, 100)
+        public Player(double x, double y) : base(x, y, 0.1, 300, 50)
         {
             sprites[States.DAMAGE] = null;
             directory = "Player\\";
@@ -35,6 +31,8 @@ namespace AloneHero_CSharp
             SetSprite("Hit.png", States.HIT, xBeginSprite, yBeginSprite, widthOfHit, Height);
             SetSprite("Run.png", States.RUN, xBeginSprite, yBeginSprite, Width, Height);
             SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, Width, Height);
+            SetSprite("Jump.png", States.JUMP, xBeginSprite, yBeginSprite, Width, Height);
+            SetSprite("Fall.png", States.FALL, xBeginSprite, yBeginSprite, Width, Height);
         }
 
         public void HealthUp(int regenerationUnits)
@@ -128,7 +126,7 @@ namespace AloneHero_CSharp
 
             if (State == States.FALL)
             {
-                State = Fall(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.FALL], Direction, window, level);
+                State = Fall(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.FALL]);
                 level.ViewOnPlayer(this);
             }
 
@@ -188,19 +186,19 @@ namespace AloneHero_CSharp
             }
         }
 
-        public override States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, Directions direction, RenderWindow window, Level level)
+        public override States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames)
         {
-            SetSprite("Fall.png", States.FALL, xBeginSprite, yBeginSprite, width, height);
+            // SetSprite("Fall.png", States.FALL, xBeginSprite, yBeginSprite, width, height);
             currentFrame += time * 0.005;
             if (currentFrame > frames) currentFrame -= frames;
 
-            if (direction == Directions.RIGHT)
+            if (Direction == Directions.RIGHT)
             {
                 sprites[States.FALL].Origin = new Vector2f(0, 0);
                 sprites[States.FALL].Scale = new Vector2f(1, 1);
                 State = States.FALL;
             }
-            else if (direction == Directions.LEFT)
+            else if (Direction == Directions.LEFT)
             {
                 sprites[States.FALL].Origin = new Vector2f(sprites[States.FALL].GetLocalBounds().Width, 0);
                 sprites[States.FALL].Scale = new Vector2f(-1, 1);
@@ -227,13 +225,13 @@ namespace AloneHero_CSharp
         private States Jump(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, Directions direction, RenderWindow window, Level level)
         {
             State = States.JUMP;
-            SetSprite("Jump.png", States.JUMP, xBeginSprite, yBeginSprite, width, height);
+            // SetSprite("Jump.png", States.JUMP, xBeginSprite, yBeginSprite, width, height);
             currentFrame += time * 0.01;
             if (currentFrame > frames) currentFrame -= frames;
 
             if (Direction == Directions.RIGHT)
             {
-                Message message = new Message(Codes.RUN_C, 0, this, X,  Y, Dx, 0);
+                Message message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
                 level.GetMessage(message);
                 sprites[States.JUMP].Origin = new Vector2f(0, 0);
                 sprites[States.JUMP].Scale = new Vector2f(1, 1);

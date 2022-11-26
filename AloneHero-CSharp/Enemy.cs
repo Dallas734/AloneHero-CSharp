@@ -30,7 +30,7 @@ namespace AloneHero_CSharp
 
             if (State == States.FALL)
             {
-                State = Fall(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.IDLE], Direction, window, level);
+                State = Fall(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.IDLE]);
             }
 
             if (State == States.RUN)
@@ -102,19 +102,19 @@ namespace AloneHero_CSharp
 
         public abstract void AdditionalFeatures();
 
-        public override States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames, Directions direction, RenderWindow window, Level level)
+        public override States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames)
         {
             SetSprite("Idle.png", States.FALL, xBeginSprite, yBeginSprite, Width, Height);
             currentFrame += time * 0.005;
             if (currentFrame > frames) currentFrame -= frames;
 
-            if (direction == Directions.RIGHT)
+            if (Direction == Directions.RIGHT)
             {
                 sprites[States.FALL].Origin = new Vector2f(0, 0);
                 sprites[States.FALL].Scale = new Vector2f(1, 1);
                 State = States.FALL;
             }
-            else if (direction == Directions.LEFT)
+            else if (Direction == Directions.LEFT)
             {
                 sprites[States.FALL].Origin = new Vector2f(sprites[States.FALL].GetLocalBounds().Width, 0);
                 sprites[States.FALL].Scale = new Vector2f(-1, 1);

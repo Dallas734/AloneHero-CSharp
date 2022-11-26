@@ -6,6 +6,7 @@ using SFML.Window;
 using SFML.System;
 using System.Xml;
 using System.Globalization;
+using System.Drawing.Text;
 
 namespace AloneHero_CSharp
 {
@@ -21,6 +22,7 @@ namespace AloneHero_CSharp
         private Texture tilesetImage;
         private List<ObjectLvl> objects;
         private List<Layer> layers;
+        private Font font;
 
         private bool LoadFromFile(string fileName)
         {
@@ -262,6 +264,7 @@ namespace AloneHero_CSharp
             collisionWithPlayer = false;
             sizeOfView.X = 600;
             sizeOfView.Y = 400;
+            font = new Font("timesnewromanpsmt.ttf");
         }
 
         public ObjectLvl GetObject(string name)
@@ -498,6 +501,19 @@ namespace AloneHero_CSharp
                 return;
             }
 
+            Text text = new Text(player.Health.ToString(), font, 20);
+            Vector2f center = window.GetView().Center;
+            Vector2f size = window.GetView().Size;
+            text.Position = new Vector2f(center.X - size.X / 2 + 25, center.Y - size.Y / 2 - 5);
+            Image heartImage = new Image("Images\\Interface\\Heart.png");
+            Texture heartTexture = new Texture(heartImage);
+            Sprite heartSprite = new Sprite(heartTexture);
+            heartSprite.TextureRect = new IntRect(22, 18, 22, 19);
+            heartSprite.Position = new Vector2f(center.X - size.X / 2, center.Y - size.Y / 2);
+            //window.Draw(text);
+            //window.Display();
+
+
             // Проходимся по всем врагам
             foreach (Enemy enemy in enemies)
             {
@@ -527,7 +543,6 @@ namespace AloneHero_CSharp
 
             // Отрисовка
             window.SetView(view);
-
             window.Clear();
 
             // рисуем все тайлы (объекты не рисуем!)
@@ -535,8 +550,12 @@ namespace AloneHero_CSharp
                 for (int tile = 0; tile < layers[layer].tiles.Count; tile++)
                     window.Draw(layers[layer].tiles[tile]);
 
+            // Рисуем здоровье
+            window.Draw(heartSprite);
+            window.Draw(text);
+
             // Рисуем персонажа
-             window.Draw(player.GetSprite(player.State));
+            window.Draw(player.GetSprite(player.State));
 
             // Рисуем врагов
             foreach (Enemy enemy in enemies)

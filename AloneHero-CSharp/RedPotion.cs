@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SFML.Graphics;
 
 namespace AloneHero_CSharp
 {
