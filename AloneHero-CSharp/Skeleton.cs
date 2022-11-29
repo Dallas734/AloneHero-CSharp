@@ -32,8 +32,10 @@ namespace AloneHero_CSharp
         }
     
 
-        public override void AdditionalFeatures()
+        public override void AdditionalFeatures(Entity entity)
         {
+            Message message = new Message(Codes.BLEED_C, 5, this);
+            entity.GetMessage(message);
             int a = 0;
         }
     }

@@ -32,8 +32,17 @@ namespace AloneHero_CSharp
         ENEMY_BARIER,
         IMPROVE_STATS,
         HEALTH_UP,
-        SPEED_UP
+        SPEED_UP,
+        BLEED_C
     };
+
+    enum AddStates
+    {
+        NONE,
+        BLEED
+    };
+
+
     class Enums
     {
         

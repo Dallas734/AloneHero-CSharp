@@ -31,7 +31,7 @@ namespace AloneHero_CSharp
             SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, Width, Height);
         }
 
-        public override void AdditionalFeatures()
+        public override void AdditionalFeatures(Entity entity)
         {
             int a = 3;
         }

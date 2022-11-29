@@ -44,7 +44,7 @@ namespace AloneHero_CSharp
             {
                 Hit(time, xBeginSprite, yBeginSprite, widthOfHit, heightOfHit, countFrames[States.HIT], bufOfHit, Direction);
                 message = new Message(Codes.HIT_C, 0, this, X, Y, Dx, 0);
-                level.GetMessage(message);
+                //level.GetMessage(message);
             }
 
             if (State == States.DAMAGE && Health > 0)
@@ -75,7 +75,7 @@ namespace AloneHero_CSharp
             {
                 CollisionWithPlayer = true;
                 State = States.HIT;
-                // AditionalFeatures() с отправкой сообщения игроку
+                AdditionalFeatures(message.sender); // с отправкой сообщения игроку
             }
             else if (message.code == Codes.FALL_C)
             {
@@ -100,7 +100,7 @@ namespace AloneHero_CSharp
 
         }
 
-        public abstract void AdditionalFeatures();
+        public abstract void AdditionalFeatures(Entity entity);
 
         public override States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames)
         {

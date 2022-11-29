@@ -438,7 +438,7 @@ namespace AloneHero_CSharp
 
                     if (enemy.GetRect().Intersects(player.GetRect()) && enemy.CollisionWithPlayer == false && player.Dy == 0 && player.State != States.HIT)
                     {
-                        messageToEnemy = new Message(Codes.HIT_C, 0, null);
+                        messageToEnemy = new Message(Codes.HIT_C, 0, player);
                         messageToPlayer = new Message(Codes.DAMAGE_C, enemy.Strength, null);
                         enemy.GetMessage(messageToEnemy);
                         player.GetMessage(messageToPlayer);
@@ -578,6 +578,11 @@ namespace AloneHero_CSharp
             }
 
             window.Display();
+        }
+
+        public Player GetPlayer()
+        {
+            return player;
         }
     }
 }

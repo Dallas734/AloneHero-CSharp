@@ -2,11 +2,16 @@
 using SFML.System;
 using SFML.Window;
 using System;
+using System.Threading;
 
 namespace AloneHero_CSharp
 {
     class Player : Entity
     {
+        AddStates addState;
+        float beginTime;
+        int addDmg;
+        int first;
         public Player(double x, double y) : base(x, y, 0.1, 300, 50)
         {
             sprites[States.DAMAGE] = null;
@@ -52,7 +57,7 @@ namespace AloneHero_CSharp
         public override void Update(float time, RenderWindow window, Level level)
         {
             Message message;
-
+            // Timer timer = new System.Timers.Timer(5000);
             Console.WriteLine(Dy);
 
             // Уровень земли и падение
@@ -148,6 +153,20 @@ namespace AloneHero_CSharp
             {
                 Death(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.DEATH], Direction);
             }
+
+            // Проверка дополнительного состояния
+            //if (addState == AddStates.BLEED)
+            //{
+            //    // Изменение  состояния происходит здесь же
+            //    Health -= addDmg;
+            //    beginTime++;
+
+            //    if (beginTime >= 5000)
+            //    {
+            //        addState = AddStates.NONE;
+            //    }
+            //}
+            
         }
 
         public override void GetMessage(Message message)
@@ -183,6 +202,26 @@ namespace AloneHero_CSharp
             else if (message.code == Codes.SPEED_UP)
             {
                 Speed += message.units;
+            }
+
+            if (message.code == Codes.BLEED_C)
+            {
+                addState = AddStates.BLEED;
+                beginTime = 0;
+                addDmg = message.units;
+                //Clock clock = new Clock();
+                //float time = clock.ElapsedTime.AsMicroseconds();
+                // В течение некоторого времени снимаем здоровье
+                //while (true)
+                //{
+                    
+                //    var threeSecond = Task.Delay(TimeSpan.FromSeconds(1));
+                //}
+                //for (float i = 0 * time; i < 3 * time; i += time)
+                //{
+                //    Health -= message.units;
+                //    //System.Threading.Thread.Sleep(1000);
+                //}
             }
         }
 
