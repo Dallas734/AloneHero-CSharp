@@ -3,6 +3,7 @@ using SFML.System;
 using SFML.Window;
 using System;
 using System.Threading;
+using System.Diagnostics;
 
 namespace AloneHero_CSharp
 {
@@ -12,6 +13,7 @@ namespace AloneHero_CSharp
         float beginTime;
         int addDmg;
         int first;
+
         public Player(double x, double y) : base(x, y, 0.1, 300, 50)
         {
             sprites[States.DAMAGE] = null;
@@ -154,19 +156,24 @@ namespace AloneHero_CSharp
                 Death(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.DEATH], Direction);
             }
 
-            // Проверка дополнительного состояния
-            //if (addState == AddStates.BLEED)
-            //{
-            //    // Изменение  состояния происходит здесь же
-            //    Health -= addDmg;
-            //    beginTime++;
+            // Проверка дополнительного состояния 
+            // Кровотечение
+            if (addState == AddStates.BLEED)
+            {
+                // Изменение  состояния происходит здесь же
+                if ((int)(beginTime / 100) == first)
+                {
+                    Health -= addDmg;
+                    first++;
+                }
+                beginTime++;
 
-            //    if (beginTime >= 5000)
-            //    {
-            //        addState = AddStates.NONE;
-            //    }
-            //}
-            
+                if (beginTime >= 500)
+                {
+                    addState = AddStates.NONE;
+                }
+            }
+
         }
 
         public override void GetMessage(Message message)
@@ -206,22 +213,11 @@ namespace AloneHero_CSharp
 
             if (message.code == Codes.BLEED_C)
             {
+                // Кровотечение
                 addState = AddStates.BLEED;
                 beginTime = 0;
+                first = 0;
                 addDmg = message.units;
-                //Clock clock = new Clock();
-                //float time = clock.ElapsedTime.AsMicroseconds();
-                // В течение некоторого времени снимаем здоровье
-                //while (true)
-                //{
-                    
-                //    var threeSecond = Task.Delay(TimeSpan.FromSeconds(1));
-                //}
-                //for (float i = 0 * time; i < 3 * time; i += time)
-                //{
-                //    Health -= message.units;
-                //    //System.Threading.Thread.Sleep(1000);
-                //}
             }
         }
 
