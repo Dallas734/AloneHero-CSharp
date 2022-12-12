@@ -33,17 +33,6 @@ namespace AloneHero_CSharp
 
             window.KeyPressed += Window_KeyPressed;
 
-            // Интерфейс
-            Vector2f center = window.GetView().Center;
-            Vector2f size = window.GetView().Size;
-            //Image heartImage = new Image("Images\\Interface\\Heart.png");
-            //Texture heartTexture = new Texture(heartImage);
-            //Sprite heartSprite = new Sprite(heartTexture);
-            //heartSprite.TextureRect = new IntRect(22, 18, 22, 19);
-            //heartSprite.Position = new Vector2f(center.X - size.X / 2, center.Y - size.Y / 2);
-            //window.Draw(heartSprite);
-            //window.Display();
-
             while (window.IsOpen)
             {
                 // Время для анимации
@@ -61,8 +50,14 @@ namespace AloneHero_CSharp
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) return false;
 
                 levels[0].Draw(window, time, this);
-                Message healthUnits = new Message(Codes.HEALTH_UNITS,levels[0].GetPlayer().Health, null);
+                Message healthUnits = new Message(Codes.HEALTH_UNITS, levels[0].GetPlayer().Health, null);
+                Message speedUnits = new Message(Codes.SPEED_UNITS, levels[0].GetPlayer().Speed, null);
+                if (levels[0].GetPlayer().Speed > 0.1)
+                {
+                    int a = 0;
+                }
                 gameInterface.GetMessage(healthUnits);
+                gameInterface.GetMessage(speedUnits);
                 gameInterface.Draw(window);
                 // Отображение нарисованного
                 window.Display();

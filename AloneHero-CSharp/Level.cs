@@ -414,7 +414,7 @@ namespace AloneHero_CSharp
                 {
                     foreach (SupportItem supportItem in supportItems)
                     {
-                        if (player.GetRect().Intersects(supportItem.GetRect()))
+                        if (player.GetRect().Intersects(supportItem.GetRect()) && !supportItem.Used)
                         {
                             messageToItem = new Message(Codes.IMPROVE_STATS, 0, player);
                             supportItem.GetMessage(messageToItem);
@@ -486,7 +486,7 @@ namespace AloneHero_CSharp
             foreach (ObjectLvl supportObject in supportObjects)
             {
                 SupportItem supportItem = null;
-                if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObject.Rect.Left, supportObject.Rect.Top, 0.1);
+                if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObject.Rect.Left, supportObject.Rect.Top, 0.03);
                 else if (nameOfSupportItem == "RedPotion") supportItem = new RedPotion(supportObject.Rect.Left, supportObject.Rect.Top, 20);
                 supportItems.Add(supportItem);
             }

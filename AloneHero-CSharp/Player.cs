@@ -181,7 +181,7 @@ namespace AloneHero_CSharp
             if (message.code == Codes.DAMAGE_C)
             {
                 State = States.DAMAGE;
-                DamagePr = message.units;
+                DamagePr = message.intUnits;
             }
             else if (message.code == Codes.IDLE_C)
             {
@@ -204,11 +204,11 @@ namespace AloneHero_CSharp
             }
             else if (message.code == Codes.HEALTH_UP)
             {
-                Health += message.units;
+                Health += message.intUnits;
             }
             else if (message.code == Codes.SPEED_UP)
             {
-                Speed += message.units;
+                Speed += message.doubleUnits;
             }
 
             if (message.code == Codes.BLEED_C)
@@ -217,7 +217,7 @@ namespace AloneHero_CSharp
                 addState = AddStates.BLEED;
                 beginTime = 0;
                 first = 0;
-                addDmg = message.units;
+                addDmg = message.intUnits;
             }
         }
 

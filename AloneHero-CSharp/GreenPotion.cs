@@ -16,7 +16,7 @@ namespace AloneHero_CSharp
 
         public override void Improve(Entity entity)
         {
-            Message message = new Message(Codes.SPEED_UP, (int)improveUnits, null);
+            Message message = new Message(Codes.SPEED_UP, improveUnits, null);
             entity.GetMessage(message);
             Used = true;
         }

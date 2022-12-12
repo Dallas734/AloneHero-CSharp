@@ -64,7 +64,7 @@ namespace AloneHero_CSharp
             {
                 CollisionWithPlayer = true;
                 State = States.DAMAGE;
-                DamagePr = message.units;
+                DamagePr = message.intUnits;
             }   
             else if (message.code == Codes.RUN_C)
             {
