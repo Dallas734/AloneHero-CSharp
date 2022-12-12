@@ -33,7 +33,9 @@ namespace AloneHero_CSharp
         IMPROVE_STATS,
         HEALTH_UP,
         SPEED_UP,
-        BLEED_C
+        BLEED_C,
+        HEALTH_UNITS,
+        SPEED_UNITS
     };
 
     enum AddStates

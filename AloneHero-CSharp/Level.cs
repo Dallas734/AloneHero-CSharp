@@ -501,19 +501,6 @@ namespace AloneHero_CSharp
                 return;
             }
 
-            Text text = new Text(player.Health.ToString(), font, 20);
-            Vector2f center = window.GetView().Center;
-            Vector2f size = window.GetView().Size;
-            text.Position = new Vector2f(center.X - size.X / 2 + 25, center.Y - size.Y / 2 - 5);
-            Image heartImage = new Image("Images\\Interface\\Heart.png");
-            Texture heartTexture = new Texture(heartImage);
-            Sprite heartSprite = new Sprite(heartTexture);
-            heartSprite.TextureRect = new IntRect(22, 18, 22, 19);
-            heartSprite.Position = new Vector2f(center.X - size.X / 2, center.Y - size.Y / 2);
-            //window.Draw(text);
-            //window.Display();
-
-
             // Проходимся по всем врагам
             foreach (Enemy enemy in enemies)
             {
@@ -551,8 +538,8 @@ namespace AloneHero_CSharp
                     window.Draw(layers[layer].tiles[tile]);
 
             // Рисуем здоровье
-            window.Draw(heartSprite);
-            window.Draw(text);
+            //window.Draw(heartSprite);
+            //window.Draw(text);
 
             // Рисуем персонажа
             window.Draw(player.GetSprite(player.State));
@@ -577,7 +564,6 @@ namespace AloneHero_CSharp
                 window.Draw(supportItem.Sprite);
             }
 
-            window.Display();
         }
 
         public Player GetPlayer()

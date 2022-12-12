@@ -28,6 +28,9 @@ namespace AloneHero_CSharp
             // Карта
             Level lvl = new Level("map_XML_2.tmx");
 
+            // Интерфейс
+            GameInterface gameInterface = new GameInterface();
+
             window.KeyPressed += Window_KeyPressed;
 
             // Интерфейс
@@ -58,6 +61,11 @@ namespace AloneHero_CSharp
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) return false;
 
                 levels[0].Draw(window, time, this);
+                Message healthUnits = new Message(Codes.HEALTH_UNITS,levels[0].GetPlayer().Health, null);
+                gameInterface.GetMessage(healthUnits);
+                gameInterface.Draw(window);
+                // Отображение нарисованного
+                window.Display();
             }
 
             return false;

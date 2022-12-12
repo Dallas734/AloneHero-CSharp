@@ -36,7 +36,6 @@ namespace AloneHero_CSharp
         {
             Message message = new Message(Codes.BLEED_C, 5, this);
             entity.GetMessage(message);
-            int a = 2;
         }
     }
 }

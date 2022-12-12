@@ -15,6 +15,10 @@ namespace AloneHero_CSharp
         public float time;
         public Entity sender;
 
+        public Message(int units)
+        {
+            this.units = units;
+        }
         public Message(Codes code, int units, Entity sender)
         {
             this.code = code;
