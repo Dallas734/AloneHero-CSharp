@@ -7,7 +7,8 @@ namespace AloneHero_CSharp
 {
     class RedPotion : SupportItem
     {
-        public RedPotion(double x, double y, double improveUnits) : base(x, y, improveUnits)
+        //public event OrderEventHandler UsedEventRedPotion;
+        public RedPotion(double x, double y, double improveUnits, Level level) : base(x, y, improveUnits)
         {
             xBeginSprite = 8;
             yBeginSprite = 231;
@@ -17,8 +18,10 @@ namespace AloneHero_CSharp
 
         public override void Improve(Entity entity)
         {
-            Message message = new Message(Codes.HEALTH_UP, (int)improveUnits, null);
-            entity.GetMessage(message);
+            RaiseUsedEvent(new OrderEventArgs(Codes.HEALTH_UP, (int)improveUnits, entity));
+            //UsedEventRedPotion?.Invoke(this, new OrderEventArgs(Codes.HEALTH_UP, (int)improveUnits, entity));
+            //Message message = new Message(Codes.HEALTH_UP, (int)improveUnits, null);
+            //entity.GetMessage(message);
             Used = true;
         }
     }

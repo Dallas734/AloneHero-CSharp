@@ -11,13 +11,16 @@ namespace AloneHero_CSharp
 {
     abstract class Enemy : Entity
     {
+        public event OrderEventHandler AdditionalFeatEvent;
         public bool CollisionWithPlayer { get; set; }
-        public Enemy(double x, double y, double speed, int health, int strength) : base(x, y, speed, health, strength)
+
+        public AddStates AddFeat { get; protected set; }
+        public Enemy(double x, double y, double speed, int health, int strength, Level level) : base(x, y, speed, health, strength)
         {
             directory = "Enemies\\";
             State = States.FALL;
             Direction = Directions.RIGHT;
-
+            
         }
 
         public override void Update(float time, RenderWindow window, Level level)
@@ -25,8 +28,9 @@ namespace AloneHero_CSharp
             Message message;
 
             Y += Dy * time;
-            message = new Message(Codes.RUN_C, 0, this, X, Y, 0, Dy);
-            level.GetMessage(message);
+            RaiseSomeActionEvent(new OrderEventArgs(Codes.RUN_C, 0, X, Y, 0, Dy, level));
+            //message = new Message(Codes.RUN_C, 0, this, X, Y, 0, Dy);
+            //level.GetMessage(message);
 
             if (State == States.FALL)
             {
@@ -36,8 +40,9 @@ namespace AloneHero_CSharp
             if (State == States.RUN)
             {
                 Move(time, xBeginSprite, yBeginSprite, Width, Height, countFrames[States.RUN], Direction, level);
-                message = new Message(Codes.RUN_C, 0, this, X, Y, 0, Dy);
-                level.GetMessage(message);
+                RaiseSomeActionEvent(new OrderEventArgs(Codes.RUN_C, 0, X, Y, 0, Dy, level));
+                //message = new Message(Codes.RUN_C, 0, this, X, Y, 0, Dy);
+                //level.GetMessage(message);
             }
 
             if (State == States.HIT)
@@ -58,47 +63,95 @@ namespace AloneHero_CSharp
             }
         }
 
-        public override void GetMessage(Message message)
+        public override void GetMessageEventHandler(object sender, OrderEventArgs args)
         {
-            if (message.code == Codes.DAMAGE_C)
+            if (args.Recipient is Enemy && Equals(this, args.Recipient))
             {
-                CollisionWithPlayer = true;
-                State = States.DAMAGE;
-                DamagePr = message.intUnits;
-            }   
-            else if (message.code == Codes.RUN_C)
-            {
-                CollisionWithPlayer = false;
-                State = States.RUN;
-            }
-            else if (message.code == Codes.HIT_C)
-            {
-                CollisionWithPlayer = true;
-                State = States.HIT;
-                AdditionalFeatures(message.sender); // с отправкой сообщения игроку
-            }
-            else if (message.code == Codes.FALL_C)
-            {
-                Y = message.y;
-                Dy = message.dy;
-                State = States.RUN;
-                OnGround = true;
-            }
-            else if (message.code == Codes.JUMP_C)
-            {
-                Y = message.y;
-            }
-            else if (message.code == Codes.CHANGE_X)
-            {
-                X = message.x;
-            }
-            else if (message.code == Codes.ENEMY_BARIER)
-            {
-                if (Direction == Directions.RIGHT) Direction = Directions.LEFT;
-                else Direction = Directions.RIGHT;
-            }
+                //Entity senderEntity = (Entity)sender;
 
+                if (args.Code == Codes.DAMAGE_C)
+                {
+                    CollisionWithPlayer = true;
+                    State = States.DAMAGE;
+                    DamagePr = args.IntUnits;
+                }
+                else if (args.Code == Codes.RUN_C)
+                {
+                    CollisionWithPlayer = false;
+                    State = States.RUN;
+                }
+                else if (args.Code == Codes.HIT_C)
+                {
+                    CollisionWithPlayer = true;
+                    State = States.HIT;
+                    if (sender is Player)
+                    {
+                        AdditionalFeatures((Player)sender); // с отправкой сообщения игроку
+                    }
+                }
+                else if (args.Code == Codes.FALL_C)
+                {
+                    Y = args.Y;
+                    Dy = args.Dy;
+                    State = States.RUN;
+                    OnGround = true;
+                }
+                else if (args.Code == Codes.JUMP_C)
+                {
+                    Y = args.Y;
+                }
+                else if (args.Code == Codes.CHANGE_X)
+                {
+                    X = args.X;
+                }
+                else if (args.Code == Codes.ENEMY_BARIER)
+                {
+                    if (Direction == Directions.RIGHT) Direction = Directions.LEFT;
+                    else Direction = Directions.RIGHT;
+                }
+            }
         }
+        //public override void GetMessage(Message message)
+        //{
+        //    if (message.code == Codes.DAMAGE_C)
+        //    {
+        //        CollisionWithPlayer = true;
+        //        State = States.DAMAGE;
+        //        DamagePr = message.intUnits;
+        //    }   
+        //    else if (message.code == Codes.RUN_C)
+        //    {
+        //        CollisionWithPlayer = false;
+        //        State = States.RUN;
+        //    }
+        //    else if (message.code == Codes.HIT_C)
+        //    {
+        //        CollisionWithPlayer = true;
+        //        State = States.HIT;
+        //        AdditionalFeatures(message.sender); // с отправкой сообщения игроку
+        //    }
+        //    else if (message.code == Codes.FALL_C)
+        //    {
+        //        Y = message.y;
+        //        Dy = message.dy;
+        //        State = States.RUN;
+        //        OnGround = true;
+        //    }
+        //    else if (message.code == Codes.JUMP_C)
+        //    {
+        //        Y = message.y;
+        //    }
+        //    else if (message.code == Codes.CHANGE_X)
+        //    {
+        //        X = message.x;
+        //    }
+        //    else if (message.code == Codes.ENEMY_BARIER)
+        //    {
+        //        if (Direction == Directions.RIGHT) Direction = Directions.LEFT;
+        //        else Direction = Directions.RIGHT;
+        //    }
+
+        //}
 
         public abstract void AdditionalFeatures(Entity entity);
 
@@ -136,6 +189,11 @@ namespace AloneHero_CSharp
             sprites[States.FALL].Position = new Vector2f((float)X, (float)Y);
 
             return States.FALL;
+        }
+
+        public void RaiseAdditionalFeatEvent(OrderEventArgs args)
+        {
+            AdditionalFeatEvent?.Invoke(this, args);
         }
     }
 }

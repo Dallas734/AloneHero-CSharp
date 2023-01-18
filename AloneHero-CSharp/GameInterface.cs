@@ -19,7 +19,7 @@ namespace AloneHero_CSharp
         private int healthUnits;
         private double speedUnits;
 
-        public GameInterface()
+        public GameInterface(Game game)
         {
             font = new Font("timesnewromanpsmt.ttf");
             heartImage = new Image("Images\\Interface\\Heart.png");
@@ -28,19 +28,33 @@ namespace AloneHero_CSharp
             speedTexture = new Texture(speedImage);
             heartSprite = new Sprite(heartTexture);
             speedSprite = new Sprite(speedTexture);
+            // Подписка
+            game.LoadGame += GetMessageEventHandler;
         }
 
-        public void GetMessage(Message message)
+
+        public void GetMessageEventHandler(object sender, OrderEventArgs args)
         {
-            if (message.code == Codes.HEALTH_UNITS)
+            if (args.Code == Codes.HEALTH_UNITS)
             {
-                healthUnits = message.intUnits;
+                healthUnits = args.IntUnits;
             }
-            else if (message.code == Codes.SPEED_UNITS)
+            else if (args.Code == Codes.SPEED_UNITS)
             {
-                speedUnits = message.doubleUnits;
+                speedUnits = args.DoubleUnits;
             }
         }
+        //public void GetMessage(Message message)
+        //{
+        //    if (message.code == Codes.HEALTH_UNITS)
+        //    {
+        //        healthUnits = message.intUnits;
+        //    }
+        //    else if (message.code == Codes.SPEED_UNITS)
+        //    {
+        //        speedUnits = message.doubleUnits;
+        //    }
+        //}
         public void Draw(RenderWindow window)
         {
             Text text = new Text(healthUnits.ToString(), font, 20);

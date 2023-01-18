@@ -9,12 +9,14 @@ namespace AloneHero_CSharp
 {
     class Player : Entity
     {
+        // public event EventHandler RUN_E;
+
         AddStates addState;
         float beginTime;
         int addDmg;
         int first;
 
-        public Player(double x, double y) : base(x, y, 0.1, 300, 50)
+        public Player(double x, double y, Level level) : base(x, y, 0.1, 300, 50)
         {
             sprites[States.DAMAGE] = null;
             directory = "Player\\";
@@ -40,6 +42,9 @@ namespace AloneHero_CSharp
             SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, Width, Height);
             SetSprite("Jump.png", States.JUMP, xBeginSprite, yBeginSprite, Width, Height);
             SetSprite("Fall.png", States.FALL, xBeginSprite, yBeginSprite, Width, Height);
+            // Добавление обработчика событий (подписка на это событие)
+            level.ChangeParamEvent += GetMessageEventHandler;
+
         }
 
         public void HealthUp(int regenerationUnits)
@@ -71,8 +76,12 @@ namespace AloneHero_CSharp
             }
 
             Y += Dy * time;
-            message = new Message(Codes.RUN_C, 0, this, X, Y, 0, Dy);
-            level.GetMessage(message);
+
+            // Вызов события
+            RaiseSomeActionEvent(new OrderEventArgs(Codes.RUN_C, 0, X, Y, 0, Dy, level));
+            
+            //message = new Message(Codes.RUN_C, 0, this, X, Y, 0, Dy);
+            //level.GetMessage(message);
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.D))
             {
@@ -111,8 +120,11 @@ namespace AloneHero_CSharp
                 Direction = Directions.RIGHT;
                 State = States.HIT;
                 Hit(time, xBeginSprite, yBeginSprite, widthOfHit, Height, countFrames[States.HIT], bufOfHit, Direction);
-                message = new Message(Codes.HIT_C, 0, this, X, Y, Dx, 0);
-                level.GetMessage(message);
+
+                RaiseSomeActionEvent(new OrderEventArgs(Codes.HIT_C, 0, X, Y, Dx, 0, level));
+                //message = new Message(Codes.HIT_C, 0, this, X, Y, Dx, 0);
+                //level.GetMessage(message);
+
                 level.ViewOnPlayer(this);
             }
             else if (Keyboard.IsKeyPressed(Keyboard.Key.Left) && OnGround)
@@ -120,8 +132,10 @@ namespace AloneHero_CSharp
                 Direction = Directions.LEFT;
                 State = States.HIT;
                 Hit(time, xBeginSprite, yBeginSprite, widthOfHit, Height, countFrames[States.HIT], bufOfHit, Direction);
-                message = new Message(Codes.HIT_C, 0, this, X, Y, Dx, 0);
-                level.GetMessage(message);
+
+                RaiseSomeActionEvent(new OrderEventArgs(Codes.HIT_C, 0, X, Y, Dx, 0, level));
+                //message = new Message(Codes.HIT_C, 0, this, X, Y, Dx, 0);
+                //level.GetMessage(message);
                 level.ViewOnPlayer(this);
             }
             else if (State == States.IDLE)
@@ -176,50 +190,98 @@ namespace AloneHero_CSharp
 
         }
 
-        public override void GetMessage(Message message)
+        public override void GetMessageEventHandler(object sender, OrderEventArgs args)
         {
-            if (message.code == Codes.DAMAGE_C)
+            if (args.Recipient is Player)
             {
-                State = States.DAMAGE;
-                DamagePr = message.intUnits;
-            }
-            else if (message.code == Codes.IDLE_C)
-            {
-                State = States.IDLE;
-            }
-            else if (message.code == Codes.FALL_C)
-            {
-                Y = message.y;
-                Dy = message.dy;
-                State = States.IDLE;
-                OnGround = true;
-            }
-            else if (message.code == Codes.JUMP_C)
-            {
-                Y = message.y;
-            }
-            else if (message.code == Codes.CHANGE_X)
-            {
-                X = message.x;
-            }
-            else if (message.code == Codes.HEALTH_UP)
-            {
-                Health += message.intUnits;
-            }
-            else if (message.code == Codes.SPEED_UP)
-            {
-                Speed += message.doubleUnits;
-            }
+                if (args.Code == Codes.DAMAGE_C)
+                {
+                    State = States.DAMAGE;
+                    DamagePr = args.IntUnits;
+                }
+                else if (args.Code == Codes.IDLE_C)
+                {
+                    State = States.IDLE;
+                }
+                else if (args.Code == Codes.FALL_C)
+                {
+                    Y = args.Y;
+                    Dy = args.Dy;
+                    State = States.IDLE;
+                    OnGround = true;
+                }
+                else if (args.Code == Codes.JUMP_C)
+                {
+                    Y = args.Y;
+                }
+                else if (args.Code == Codes.CHANGE_X)
+                {
+                    X = args.X;
+                }
+                else if (args.Code == Codes.HEALTH_UP)
+                {
+                    Health += args.IntUnits;
+                }
+                else if (args.Code == Codes.SPEED_UP)
+                {
+                    Speed += args.DoubleUnits;
+                }
 
-            if (message.code == Codes.BLEED_C)
-            {
-                // Кровотечение
-                addState = AddStates.BLEED;
-                beginTime = 0;
-                first = 0;
-                addDmg = message.intUnits;
+                if (args.Code == Codes.BLEED_C)
+                {
+                    // Кровотечение
+                    addState = AddStates.BLEED;
+                    beginTime = 0;
+                    first = 0;
+                    addDmg = args.IntUnits;
+                }
             }
         }
+
+        //public override void GetMessage(Message message)
+        //{
+        //    if (message.code == Codes.DAMAGE_C)
+        //    {
+        //        State = States.DAMAGE;
+        //        DamagePr = message.intUnits;
+        //    }
+        //    else if (message.code == Codes.IDLE_C)
+        //    {
+        //        State = States.IDLE;
+        //    }
+        //    else if (message.code == Codes.FALL_C)
+        //    {
+        //        Y = message.y;
+        //        Dy = message.dy;
+        //        State = States.IDLE;
+        //        OnGround = true;
+        //    }
+        //    else if (message.code == Codes.JUMP_C)
+        //    {
+        //        Y = message.y;
+        //    }
+        //    else if (message.code == Codes.CHANGE_X)
+        //    {
+        //        X = message.x;
+        //    }
+        //    else if (message.code == Codes.HEALTH_UP)
+        //    {
+        //        Health += message.intUnits;
+        //    }
+        //    else if (message.code == Codes.SPEED_UP)
+        //    {
+        //        Speed += message.doubleUnits;
+        //    }
+
+        //    if (message.code == Codes.BLEED_C)
+        //    {
+        //        // Кровотечение
+        //        addState = AddStates.BLEED;
+        //        beginTime = 0;
+        //        first = 0;
+        //        addDmg = message.intUnits;
+        //    }
+        //}
 
         public override States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames)
         {
@@ -266,15 +328,18 @@ namespace AloneHero_CSharp
 
             if (Direction == Directions.RIGHT)
             {
-                Message message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
-                level.GetMessage(message);
+                RaiseSomeActionEvent(new OrderEventArgs(Codes.RUN_C, 0, X, Y, Dx, 0, level));
+                //Message message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
+                //level.GetMessage(message);
+
                 sprites[States.JUMP].Origin = new Vector2f(0, 0);
                 sprites[States.JUMP].Scale = new Vector2f(1, 1);
             }
             else if (Direction == Directions.LEFT)
             {
-                Message message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
-                level.GetMessage(message);
+                RaiseSomeActionEvent(new OrderEventArgs(Codes.RUN_C, 0, X, Y, Dx, 0, level));
+                //Message message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
+                //level.GetMessage(message);
                 sprites[States.JUMP].Origin = new Vector2f(sprites[States.JUMP].GetLocalBounds().Width, 0);
                 sprites[States.JUMP].Scale = new Vector2f(-1, 1);
             }

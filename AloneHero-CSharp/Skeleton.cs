@@ -6,7 +6,7 @@ namespace AloneHero_CSharp
 {
     class Skeleton : Enemy
     {
-        public Skeleton(double x, double y, double speed, int health, int strenght) : base(x, y, speed, health, strenght)
+        public Skeleton(double x, double y, double speed, int health, int strenght, Level level) : base(x, y, speed, health, strenght, level)
         {
             directory = "Enemies\\Skeleton\\";
             xBeginSprite = 57;
@@ -29,6 +29,8 @@ namespace AloneHero_CSharp
             SetSprite("Hit.png", States.HIT, xBeginSprite, yBeginSprite, widthOfHit, Height);
             SetSprite("Run.png", States.RUN, xBeginSprite, yBeginSprite, Width, Height);
             SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, Width, Height);
+            // Подписка на событие
+            level.ChangeParamEvent += GetMessageEventHandler;
         }
     
 

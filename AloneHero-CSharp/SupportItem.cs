@@ -9,6 +9,9 @@ namespace AloneHero_CSharp
 {
     abstract class SupportItem
     {
+        public delegate void OrderEventHandler(object sender, OrderEventArgs args);
+        public event OrderEventHandler UsedEvent;
+
         protected double x, y;
         protected double beginY;
         protected Image image;
@@ -32,7 +35,7 @@ namespace AloneHero_CSharp
             Used = false;
             image = new Image(fileName);
             texture = new Texture(image);
-            Sprite = new Sprite(texture);   
+            Sprite = new Sprite(texture);
         }
 
         public void Update(float time, RenderWindow window)
@@ -55,18 +58,22 @@ namespace AloneHero_CSharp
         }
 
         public abstract void Improve(Entity entity);
+        public void GetMessageEventHandler(object sender, OrderEventArgs args)
+        {
+            if (args.Code == Codes.IMPROVE_STATS && sender is Player && args.Recipient is SupportItem)
+            {
+                Improve((Player)sender);
+            }
+        }
 
         public FloatRect GetRect()
         {
             return new FloatRect((float)x, (float)y, width, height);
         }
 
-        public void GetMessage(Message message)
+        protected void RaiseUsedEvent(OrderEventArgs args)
         {
-            if (message.code == Codes.IMPROVE_STATS)
-            {
-                Improve(message.sender);
-            }
+            UsedEvent?.Invoke(this, args);
         }
     }
 }

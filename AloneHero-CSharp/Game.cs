@@ -10,6 +10,8 @@ namespace AloneHero_CSharp
     class Game
     {
         private bool endGame;
+        public delegate void OrderEventHandler(object sender, OrderEventArgs args);
+        public event OrderEventHandler LoadGame;
 
         public Game()
         {
@@ -29,7 +31,7 @@ namespace AloneHero_CSharp
             Level lvl = new Level("map_XML_2.tmx");
 
             // Интерфейс
-            GameInterface gameInterface = new GameInterface();
+            GameInterface gameInterface = new GameInterface(this);
 
             window.KeyPressed += Window_KeyPressed;
 
@@ -50,14 +52,16 @@ namespace AloneHero_CSharp
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) return false;
 
                 levels[0].Draw(window, time, this);
-                Message healthUnits = new Message(Codes.HEALTH_UNITS, levels[0].GetPlayer().Health, null);
-                Message speedUnits = new Message(Codes.SPEED_UNITS, levels[0].GetPlayer().Speed, null);
+                LoadGame?.Invoke(this, new OrderEventArgs(Codes.HEALTH_UNITS, levels[0].GetPlayer().Health, gameInterface));
+                LoadGame?.Invoke(this, new OrderEventArgs(Codes.SPEED_UNITS, levels[0].GetPlayer().Speed, gameInterface));
+                //Message healthUnits = new Message(Codes.HEALTH_UNITS, levels[0].GetPlayer().Health, null);
+                //Message speedUnits = new Message(Codes.SPEED_UNITS, levels[0].GetPlayer().Speed, null);
                 if (levels[0].GetPlayer().Speed > 0.1)
                 {
                     int a = 0;
                 }
-                gameInterface.GetMessage(healthUnits);
-                gameInterface.GetMessage(speedUnits);
+                //gameInterface.GetMessage(healthUnits);
+                //gameInterface.GetMessage(speedUnits);
                 gameInterface.Draw(window);
                 // Отображение нарисованного
                 window.Display();

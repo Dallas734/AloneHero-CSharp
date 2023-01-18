@@ -11,6 +11,8 @@ namespace AloneHero_CSharp
 {
     abstract class Entity
     {
+        public delegate void OrderEventHandler(object sender, OrderEventArgs args);
+        public event OrderEventHandler SomeActionEvent;
         public double Speed { get; protected set; }
         public double Dx { get; protected set; }
         public double Dy { get; protected set; }
@@ -41,6 +43,7 @@ namespace AloneHero_CSharp
         protected string directory; // Имя директории, где хранятся анимации
         protected Dictionary<States, Sprite> sprites; // Спрайты
         public States State { set; get; }
+
         protected Image image; // Картинка для создания спрайтов
         protected Texture texture; // Текстура для создания спрайтов
         public Directions Direction { get; set; } // Направление движения
@@ -64,7 +67,9 @@ namespace AloneHero_CSharp
 
         public abstract void Update(float time, RenderWindow window, Level level);
         public abstract States Fall(float time, int xBeginSprite, int yBeginSprite, int width, int height, int frames);
-        public abstract void GetMessage(Message message);
+        // public abstract void GetMessage(Message message);
+        public abstract void GetMessageEventHandler(object sender, OrderEventArgs args);
+      
         public Sprite GetSprite(States spriteName)
         {
             switch (spriteName)
@@ -227,9 +232,12 @@ namespace AloneHero_CSharp
             sprites[States.RUN].TextureRect = new IntRect(xBeginSprite + (width + bufWidth) * (int)currentFrame, yBeginSprite, width, height);
 
             X += Dx * time;
-            message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
-            level.GetMessage(message);
 
+
+            SomeActionEvent?.Invoke(this, new OrderEventArgs(Codes.RUN_C, 0, X, Y, Dx, 0, level));
+            //message = new Message(Codes.RUN_C, 0, this, X, Y, Dx, 0);
+            //level.GetMessage(message);
+            
             currentFrame += time * 0.005;
             if (currentFrame > frames)
             {
@@ -302,6 +310,12 @@ namespace AloneHero_CSharp
             sprites[States.DEATH].Position = new Vector2f((float)X, (float)Y);
 
             return States.DEATH;
+        }
+
+        // Вызывает события
+        protected void RaiseSomeActionEvent(OrderEventArgs args)
+        {
+            SomeActionEvent?.Invoke(this, args);
         }
     }
 }
