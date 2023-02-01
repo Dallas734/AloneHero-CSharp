@@ -17,7 +17,7 @@ namespace AloneHero_CSharp
         protected Image image;
         protected Texture texture;
         public Sprite Sprite { get; protected set; }
-        protected string fileName;
+        public string FileName { get; protected set; }
         protected int width, height;
         protected int xBeginSprite, yBeginSprite;
         protected double improveUnits;
@@ -30,12 +30,9 @@ namespace AloneHero_CSharp
             this.y = y;
             beginY = y;
             this.improveUnits = improveUnits;
-            fileName = "Images\\Potions\\PotionsPack1.png";
             up = true;
             Used = false;
-            image = new Image(fileName);
-            texture = new Texture(image);
-            Sprite = new Sprite(texture);
+            
         }
 
         public void Update(float time, RenderWindow window)

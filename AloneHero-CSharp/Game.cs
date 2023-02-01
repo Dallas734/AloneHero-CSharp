@@ -54,6 +54,7 @@ namespace AloneHero_CSharp
                 levels[0].Draw(window, time, this);
                 LoadGame?.Invoke(this, new OrderEventArgs(Codes.HEALTH_UNITS, levels[0].GetPlayer().Health, gameInterface));
                 LoadGame?.Invoke(this, new OrderEventArgs(Codes.SPEED_UNITS, levels[0].GetPlayer().Speed, gameInterface));
+                LoadGame?.Invoke(this, new OrderEventArgs(Codes.COIN_UNITS, (int)levels[0].GetPlayer().Coins, gameInterface));
                 //Message healthUnits = new Message(Codes.HEALTH_UNITS, levels[0].GetPlayer().Health, null);
                 //Message speedUnits = new Message(Codes.SPEED_UNITS, levels[0].GetPlayer().Speed, null);
                 if (levels[0].GetPlayer().Speed > 0.1)

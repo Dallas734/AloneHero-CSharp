@@ -246,7 +246,9 @@ namespace AloneHero_CSharp
 
             FillSupportItem("GreenPotion");
             FillSupportItem("RedPotion");
+            FillSupportItem("Coin");
 
+            // Подписки
             // Подписка на врагов
             foreach (Enemy enemy in enemies)
             {
@@ -641,6 +643,7 @@ namespace AloneHero_CSharp
                 SupportItem supportItem = null;
                 if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObject.Rect.Left, supportObject.Rect.Top, 0.03, this);
                 else if (nameOfSupportItem == "RedPotion") supportItem = new RedPotion(supportObject.Rect.Left, supportObject.Rect.Top, 20, this);
+                else if (nameOfSupportItem == "Coin") supportItem = new Coin(supportObject.Rect.Left, supportObject.Rect.Top, 15, this);
                 supportItems.Add(supportItem);
             }
         }

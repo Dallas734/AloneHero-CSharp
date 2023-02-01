@@ -35,7 +35,7 @@ namespace AloneHero_CSharp
 
         public override void AdditionalFeatures(Entity entity)
         {
-            int a = 3;
+            RaiseAdditionalFeatEvent(new OrderEventArgs(Codes.COIN_DOWN, 5, entity));
         }
     }
 }

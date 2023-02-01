@@ -15,6 +15,7 @@ namespace AloneHero_CSharp
         float beginTime;
         int addDmg;
         int first;
+        public double Coins { get; private set; }
 
         public Player(double x, double y, Level level) : base(x, y, 0.1, 300, 50)
         {
@@ -234,6 +235,16 @@ namespace AloneHero_CSharp
                     beginTime = 0;
                     first = 0;
                     addDmg = args.IntUnits;
+                }
+
+                if (args.Code == Codes.COIN_DOWN)
+                {
+                    if (Coins > 0) Coins -= args.IntUnits;
+                }
+
+                if (args.Code == Codes.COIN_UP)
+                {
+                    Coins += args.IntUnits;
                 }
             }
         }

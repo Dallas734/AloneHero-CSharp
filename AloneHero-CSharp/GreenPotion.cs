@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SFML.Graphics;
 
 namespace AloneHero_CSharp
 {
@@ -13,7 +14,10 @@ namespace AloneHero_CSharp
             yBeginSprite = 231;
             width = 20;
             height = 22;
-
+            FileName = "Images\\Potions\\PotionsPack1.png";
+            image = new Image(FileName);
+            texture = new Texture(image);
+            Sprite = new Sprite(texture);
         }
 
         public override void Improve(Entity entity)

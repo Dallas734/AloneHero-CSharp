@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="26">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="27">
  <tileset firstgid="1" source="Images/Tiles/castle-tileset.png"/>
  <layer id="2" name="Слой тайлов 2" width="100" height="30">
   <data>
@@ -3027,6 +3027,7 @@
   <object id="23" name="Solid" x="304" y="367.333" width="144.667" height="18"/>
   <object id="24" name="RedPotion" x="864.667" y="412" width="38.6667" height="38.6667"/>
   <object id="25" name="GreenPotion" x="936" y="409.333" width="38.6667" height="42"/>
+  <object id="26" name="Coin" x="1003" y="406" width="44" height="42"/>
  </objectgroup>
  <layer id="1" name="Слой тайлов 1" width="100" height="30">
   <data>

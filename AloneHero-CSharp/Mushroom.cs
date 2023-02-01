@@ -30,7 +30,7 @@ namespace AloneHero_CSharp
             SetSprite("Hit.png", States.HIT, xBeginSprite, yBeginSprite, widthOfHit, Height);
             SetSprite("Run.png", States.RUN, xBeginSprite, yBeginSprite, Width, Height);
             SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, Width, Height);
-            // Событие на событие 
+            // Подписка на событие 
             level.ChangeParamEvent += GetMessageEventHandler;
         }
 
