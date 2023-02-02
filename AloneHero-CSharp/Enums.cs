@@ -38,7 +38,10 @@ namespace AloneHero_CSharp
         BLEED_C,
         HEALTH_UNITS,
         SPEED_UNITS,
-        COIN_UNITS
+        COIN_UNITS,
+        END_GAME, 
+        NEXT_LEVEL,
+        PLAYER_STATS_MOVE
     };
 
     enum AddStates

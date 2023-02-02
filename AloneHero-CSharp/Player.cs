@@ -15,9 +15,9 @@ namespace AloneHero_CSharp
         float beginTime;
         int addDmg;
         int first;
-        public double Coins { get; private set; }
+        public int Coins { get; private set; }
 
-        public Player(double x, double y, Level level) : base(x, y, 0.1, 300, 50)
+        public Player(double x, double y, double speed, int health, int strenght, int coins, Level level) : base(x, y, speed, health, strenght)
         {
             sprites[States.DAMAGE] = null;
             directory = "Player\\";
@@ -29,6 +29,7 @@ namespace AloneHero_CSharp
             xBeginSprite = 56;
             yBeginSprite = 44;
             widthOfHit = 109;
+            Coins = coins;
             countFrames[States.RUN] = 8;
             countFrames[States.IDLE] = 8;
             countFrames[States.HIT] = 4;
@@ -45,7 +46,6 @@ namespace AloneHero_CSharp
             SetSprite("Fall.png", States.FALL, xBeginSprite, yBeginSprite, Width, Height);
             // Добавление обработчика событий (подписка на это событие)
             level.ChangeParamEvent += GetMessageEventHandler;
-
         }
 
         public void HealthUp(int regenerationUnits)
@@ -245,6 +245,15 @@ namespace AloneHero_CSharp
                 if (args.Code == Codes.COIN_UP)
                 {
                     Coins += args.IntUnits;
+                }
+
+                if (args.Code == Codes.PLAYER_STATS_MOVE)
+                {
+                    Player player1 = (Player)args.Entity;
+                    Health = player1.Health;
+                    Speed = player1.Speed;
+                    //Strength = args.Strength;
+                    Coins = player1.Coins;
                 }
             }
         }

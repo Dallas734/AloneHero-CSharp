@@ -30,6 +30,14 @@ namespace AloneHero_CSharp
             DoubleUnits = units;
             Recipient = recipient;
         }
+
+        public OrderEventArgs(Codes code, Entity entity, object recipient)
+        {
+            Code = code;
+            Entity = entity;
+            Recipient = recipient;
+        }
+
         public Codes Code { get; set; }
         public int IntUnits { get; set; }
         public double DoubleUnits { get; set; }
@@ -39,6 +47,12 @@ namespace AloneHero_CSharp
         public double Dy { get; set; }
         public float Time { get; set; }
 
+        public double Speed { get; set; }
+        public int Health { get; set; } // Здоровье
+        public int Strength { get; set; } // Сила
+        public int Coins { get; set; }
+
+        public Entity Entity { get; set; }
         public object Recipient { get; set; }
     }
 }

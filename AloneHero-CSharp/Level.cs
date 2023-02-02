@@ -14,6 +14,8 @@ namespace AloneHero_CSharp
     {
         public delegate void OrderEventHandler(object sender, OrderEventArgs args);
         public event OrderEventHandler ChangeParamEvent;
+        public event OrderEventHandler EndGame;
+        public event OrderEventHandler NextLevel;
 
         private Player player;
         private List<Enemy> enemies;
@@ -26,6 +28,7 @@ namespace AloneHero_CSharp
         private List<ObjectLvl> objects;
         private List<Layer> layers;
         private Font font;
+        public bool LevelEnd { get; private set; }
 
         private bool LoadFromFile(string fileName)
         {
@@ -236,7 +239,7 @@ namespace AloneHero_CSharp
             ObjectLvl playerObject = GetObject("Player");
             if (player == null)
             {
-                player = new Player(playerObject.Rect.Left, playerObject.Rect.Top, this);
+                player = new Player(playerObject.Rect.Left, playerObject.Rect.Top - 100, 0.1, 300, 50, 0, this);
                 view.Reset(new FloatRect(0, 0, 1200, 800));
             }
 
@@ -270,7 +273,7 @@ namespace AloneHero_CSharp
         private View view;
         private Vector2i sizeOfView;
 
-        public Level(string fileNameTMX)
+        public Level(string fileNameTMX, Game game)
         {
             layers = new List<Layer>();
             objects = new List<ObjectLvl>();
@@ -284,7 +287,9 @@ namespace AloneHero_CSharp
             sizeOfView.Y = 400;
             font = new Font("timesnewromanpsmt.ttf");
             //Добавление обработчика событий (подписка на это событие). Подписка на игрока
-            player.SomeActionEvent += GetMessageEventHandler;   
+            player.SomeActionEvent += GetMessageEventHandler;
+            //game.PlayerStatsMove += GetMessageEventHandler;
+            LevelEnd = false;
         }
 
         public ObjectLvl GetObject(string name)
@@ -415,6 +420,15 @@ namespace AloneHero_CSharp
                             //message.sender.GetMessage(messageToEnemy);
                         }
                     }
+
+                    // Переключение уровня
+                    if (senderEntity is Player && senderEntity.GetRect().Intersects(GetObject("Chest").Rect))
+                    {
+                        NextLevel?.Invoke(this, new OrderEventArgs(Codes.NEXT_LEVEL, 0, null));
+                        LevelEnd = true;
+                        break;
+                        //EndGame?.Invoke(this, new OrderEventArgs(Codes.END_GAME, 0, null));
+                    }
                 }
             }
 
@@ -451,7 +465,6 @@ namespace AloneHero_CSharp
                         }
                     }
                 }
-
             }
 
             // Враг
@@ -496,6 +509,15 @@ namespace AloneHero_CSharp
                     }
 
                 }
+            }
+
+            if (args.Code == Codes.PLAYER_STATS_MOVE)
+            {
+                ChangeParamEvent?.Invoke(null, args);
+                //Player player1 = (Player)args.Entity;
+                //player = null;
+                //ObjectLvl playerObject = GetObject("Player");
+                //player =   new Player(playerObject.Rect.Left - 100, playerObject.Rect.Top - 100, player1.Speed, player1.Health, player1.Strength, player1.Coins, this);
             }
         }
 
@@ -648,12 +670,12 @@ namespace AloneHero_CSharp
             }
         }
 
-        public void Draw(RenderWindow window, float time, Game game)
+        public void Draw(RenderWindow window, float time)
         {
             player.Update(time, window, this);
             if (player.State == States.DEATH)
             {
-                game.SetEndGame(true);
+                EndGame?.Invoke(this, new OrderEventArgs(Codes.END_GAME, 0, null));
                 return;
             }
 
