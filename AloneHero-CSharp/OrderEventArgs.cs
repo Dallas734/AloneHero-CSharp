@@ -6,6 +6,22 @@ namespace AloneHero_CSharp
 {
     class OrderEventArgs : EventArgs
     {
+        public Codes Code { get; set; }
+        public int IntUnits { get; set; }
+        public double DoubleUnits { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Dx { get; set; }
+        public double Dy { get; set; }
+        public float Time { get; set; }
+
+        public double Speed { get; set; }
+        public int Health { get; set; } // Здоровье
+        public int Strength { get; set; } // Сила
+        public int Coins { get; set; }
+
+        public Entity Entity { get; set; }
+        public object Recipient { get; set; }
         public OrderEventArgs (Codes code, int intUnits, double x, double y, double dx, double dy, object recipient)
         {
             Code = code;
@@ -37,22 +53,6 @@ namespace AloneHero_CSharp
             Entity = entity;
             Recipient = recipient;
         }
-
-        public Codes Code { get; set; }
-        public int IntUnits { get; set; }
-        public double DoubleUnits { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Dx { get; set; }
-        public double Dy { get; set; }
-        public float Time { get; set; }
-
-        public double Speed { get; set; }
-        public int Health { get; set; } // Здоровье
-        public int Strength { get; set; } // Сила
-        public int Coins { get; set; }
-
-        public Entity Entity { get; set; }
-        public object Recipient { get; set; }
+ 
     }
 }

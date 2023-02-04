@@ -10,7 +10,6 @@ namespace AloneHero_CSharp
     {
         private Font font;
         private List<Text> mainMenu;
-        private bool isMenu;
         public int MenuNum { get; private set; }
 
         public Menu(float width, float height)
