@@ -30,6 +30,29 @@ namespace AloneHero_CSharp
         private Font font;
         public bool LevelEnd { get; private set; }
 
+        private bool collisionWithPlayer;
+        private View view;
+        private Vector2i sizeOfView;
+
+        public Level(string fileNameTMX, Game game)
+        {
+            layers = new List<Layer>();
+            objects = new List<ObjectLvl>();
+            enemies = new List<Enemy>();
+            supportItems = new List<SupportItem>();
+            view = new View();
+            this.fileNameTMX = "Levels\\" + fileNameTMX;
+            LoadFromFile(this.fileNameTMX);
+            collisionWithPlayer = false;
+            sizeOfView.X = 600;
+            sizeOfView.Y = 400;
+            font = new Font("timesnewromanpsmt.ttf");
+            //Добавление обработчика событий (подписка на это событие). Подписка на игрока
+            player.SomeActionEvent += GetMessageEventHandler;
+            //game.PlayerStatsMove += GetMessageEventHandler;
+            LevelEnd = false;
+        }
+
         private bool LoadFromFile(string fileName)
         {
             XmlDocument levelFile = new XmlDocument();
@@ -267,29 +290,6 @@ namespace AloneHero_CSharp
 
             return true;
 
-        }
-
-        private bool collisionWithPlayer;
-        private View view;
-        private Vector2i sizeOfView;
-
-        public Level(string fileNameTMX, Game game)
-        {
-            layers = new List<Layer>();
-            objects = new List<ObjectLvl>();
-            enemies = new List<Enemy>();
-            supportItems = new List<SupportItem>();
-            view = new View();
-            this.fileNameTMX = "Levels\\" + fileNameTMX;
-            LoadFromFile(this.fileNameTMX);
-            collisionWithPlayer = false;
-            sizeOfView.X = 600;
-            sizeOfView.Y = 400;
-            font = new Font("timesnewromanpsmt.ttf");
-            //Добавление обработчика событий (подписка на это событие). Подписка на игрока
-            player.SomeActionEvent += GetMessageEventHandler;
-            //game.PlayerStatsMove += GetMessageEventHandler;
-            LevelEnd = false;
         }
 
         public ObjectLvl GetObject(string name)

@@ -4,6 +4,7 @@ using System.Text;
 using SFML.Graphics;
 using SFML.Window;
 using SFML.System;
+using System.Xml.Linq;
 
 namespace AloneHero_CSharp
 {
@@ -146,7 +147,16 @@ namespace AloneHero_CSharp
             var window = (Window)sender;
             if (e.Code == Keyboard.Key.Escape)
             {
-                window.Close();
+                if (sender == MENU)
+                {
+                    window.Close();
+                }
+                else 
+                {
+                    window.Close();
+                    MENU.Display();
+                    return;
+                }
             }
             if (e.Code == Keyboard.Key.Tab || endGame)
             {
@@ -221,6 +231,7 @@ namespace AloneHero_CSharp
                         gameInterface.Draw(PLAY);
                         // Отображение нарисованного
                         PLAY.Display();
+                        MENU.Close();
                     }
                 } 
 
@@ -242,6 +253,41 @@ namespace AloneHero_CSharp
                 }
 
             }
+            if (Keyboard.IsKeyPressed(Keyboard.Key.F5))
+            {
+                SaveGame();
+            }
+        }
+
+        private void SaveGame()
+        {
+            XDocument xdoc = new XDocument();
+
+            XElement levelEl = new XElement("level");
+            XAttribute numLevel = new XAttribute("curLevel", curLevel.ToString());
+            levelEl.Add(numLevel);
+
+            XElement player = new XElement("player");
+            XAttribute xPlayer = new XAttribute("x", level.GetPlayer().X.ToString());
+            XAttribute yPlayer = new XAttribute("y", level.GetPlayer().Y.ToString());
+            XAttribute healthPlayer = new XAttribute("Health", level.GetPlayer().Health.ToString());
+            XAttribute speedPlayer = new XAttribute("Speed", level.GetPlayer().Speed.ToString());
+            XAttribute coinsPlayer = new XAttribute("Coins", level.GetPlayer().Coins.ToString());
+            XAttribute strengthPlayer = new XAttribute("Strenght", level.GetPlayer().Strength.ToString());
+            player.Add(xPlayer);
+            player.Add(yPlayer);
+            player.Add(healthPlayer);
+            player.Add(speedPlayer);
+            player.Add(coinsPlayer);
+            player.Add(strengthPlayer);
+
+            // Добавляем игрока в корневой элемент 
+            levelEl.Add(player);
+
+            // Записываем корневой элемент 
+            xdoc.Add(levelEl);
+
+            xdoc.Save("save-file.xml");
         }
 
     }
