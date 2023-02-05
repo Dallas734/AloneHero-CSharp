@@ -13,6 +13,7 @@ namespace AloneHero_CSharp
     {
         public event OrderEventHandler AdditionalFeatEvent;
         public bool CollisionWithPlayer { get; set; }
+        private bool changed;
 
         public AddStates AddFeat { get; protected set; }
         public Enemy(double x, double y, double speed, int health, int strength, Level level) : base(x, y, speed, health, strength)
@@ -20,7 +21,7 @@ namespace AloneHero_CSharp
             directory = "Enemies\\";
             State = States.FALL;
             Direction = Directions.RIGHT;
-            
+            changed = false;
         }
 
         public override void Update(float time, RenderWindow window, Level level)
@@ -109,6 +110,15 @@ namespace AloneHero_CSharp
                     if (Direction == Directions.RIGHT) Direction = Directions.LEFT;
                     else Direction = Directions.RIGHT;
                 }
+                
+            }
+            else if (args.Recipient is Enemy && args.Code == Codes.STATS_MOVE_LOAD_ENEMY && changed == false)
+            {
+                Enemy enemy = (Enemy)args.Entity;
+                X = enemy.X;
+                Y = enemy.Y;
+                Health = enemy.Health;
+                changed = true;
             }
         }
         //public override void GetMessage(Message message)

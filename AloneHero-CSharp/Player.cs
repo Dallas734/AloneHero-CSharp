@@ -247,13 +247,24 @@ namespace AloneHero_CSharp
                     Coins += args.IntUnits;
                 }
 
-                if (args.Code == Codes.PLAYER_STATS_MOVE)
+                if (args.Code == Codes.STATS_MOVE_NEXT_LVL && args.Recipient is Player)
                 {
                     Player player1 = (Player)args.Entity;
                     Health = player1.Health;
                     Speed = player1.Speed;
-                    //Strength = args.Strength;
                     Coins = player1.Coins;
+                    Strength = player1.Strength;
+                }
+
+                if (args.Code == Codes.STATS_MOVE_LOAD && args.Recipient is Player)
+                {
+                    Player player1 = (Player)args.Entity;
+                    X = player1.X;
+                    Y = player1.Y;
+                    Health = player1.Health;
+                    Speed = player1.Speed;
+                    Coins = player1.Coins;
+                    Strength = player1.Strength;
                 }
             }
         }

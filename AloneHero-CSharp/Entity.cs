@@ -27,7 +27,7 @@ namespace AloneHero_CSharp
         protected int bufOfHit;
         protected double currentFrame; // Текущий кадр
         public int Health { get; protected set; } // Здоровье
-        public int Strength { get; } // Сила
+        public int Strength { get; protected set; } // Сила
         public int DamagePr { get;  protected set; } // Полученный урон
         public bool OnGround { get; protected set; }
 

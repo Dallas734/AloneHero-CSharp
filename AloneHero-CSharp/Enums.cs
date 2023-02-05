@@ -41,7 +41,9 @@ namespace AloneHero_CSharp
         COIN_UNITS,
         END_GAME, 
         NEXT_LEVEL,
-        PLAYER_STATS_MOVE
+        STATS_MOVE_NEXT_LVL,
+        STATS_MOVE_LOAD,
+        STATS_MOVE_LOAD_ENEMY
     };
 
     enum AddStates

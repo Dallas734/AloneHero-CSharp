@@ -17,14 +17,19 @@ namespace AloneHero_CSharp
             MenuNum = 0;
             font = new Font("timesnewromanpsmt.ttf");
             mainMenu = new List<Text>();
-            mainMenu.Add(new Text("Play", font, 70));
+            mainMenu.Add(new Text("New Game", font, 70));
             mainMenu[0].Position = new Vector2f(400, 200);
 
-            mainMenu.Add(new Text("About", font, 70));
+            mainMenu.Add(new Text("Load", font, 70));
             mainMenu[1].Position = new Vector2f(400, 300);
 
-            mainMenu.Add(new Text("Exit", font, 70));
+            mainMenu.Add(new Text("About", font, 70));
             mainMenu[2].Position = new Vector2f(400, 400);
+
+            mainMenu.Add(new Text("Exit", font, 70));
+            mainMenu[3].Position = new Vector2f(400, 500);
+
+            mainMenu[MenuNum].FillColor = Color.Blue;
         }
 
         public void Draw(RenderWindow window)
@@ -45,7 +50,7 @@ namespace AloneHero_CSharp
                 MenuNum--;
                 if (MenuNum == -1)
                 {
-                    MenuNum = 2;
+                    MenuNum = 3;
                 }
                 mainMenu[MenuNum].FillColor = Color.Blue;
             }

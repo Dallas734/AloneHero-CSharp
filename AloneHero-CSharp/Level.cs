@@ -16,6 +16,7 @@ namespace AloneHero_CSharp
         public event OrderEventHandler ChangeParamEvent;
         public event OrderEventHandler EndGame;
         public event OrderEventHandler NextLevel;
+        public event OrderEventHandler LoadEnemy;
 
         private Player player;
         private List<Enemy> enemies;
@@ -511,7 +512,7 @@ namespace AloneHero_CSharp
                 }
             }
 
-            if (args.Code == Codes.PLAYER_STATS_MOVE)
+            if (args.Code == Codes.STATS_MOVE_NEXT_LVL || args.Code == Codes.STATS_MOVE_LOAD)
             {
                 ChangeParamEvent?.Invoke(null, args);
                 //Player player1 = (Player)args.Entity;
@@ -519,6 +520,16 @@ namespace AloneHero_CSharp
                 //ObjectLvl playerObject = GetObject("Player");
                 //player =   new Player(playerObject.Rect.Left - 100, playerObject.Rect.Top - 100, player1.Speed, player1.Health, player1.Strength, player1.Coins, this);
             }
+
+            if (args.Code == Codes.STATS_MOVE_LOAD_ENEMY)
+            {
+                LoadEnemy?.Invoke(null, args);
+            }
+
+            //if (args.Code == Codes.ENEMY_STATS_MOVE)
+            //{
+            //    ChangeParamEvent?.Invoke(null, args);
+            //}    
         }
 
         public void GetMessage(Message message)
@@ -747,6 +758,16 @@ namespace AloneHero_CSharp
         public Player GetPlayer()
         {
             return player;
+        }
+
+        public List<Enemy> GetEnemies()
+        {
+            return enemies;
+        }
+
+        public List<SupportItem> GetSupportItems()
+        {
+            return supportItems;
         }
     } 
 }

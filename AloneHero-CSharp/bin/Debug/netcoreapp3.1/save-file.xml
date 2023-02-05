@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<level curLevel="1">
-  <player x="673" y="393" Health="320" Speed="0,13" Coins="15" Strenght="50" />
+<level curLevel="0">
+  <player x="708" y="391" Health="300" Speed="0,1" Coins="0" Strenght="50" />
+  <enemies>
+    <enemy x="444,2683995819095" y="410" Health="300" Speed="0,08" Strength="50" />
+    <enemy x="93,52259986877458" y="373" Health="300" Speed="0,08" Strength="50" />
+    <enemy x="310,3688998794557" y="329" Health="300" Speed="0,08" Strength="50" />
+  </enemies>
 </level>
