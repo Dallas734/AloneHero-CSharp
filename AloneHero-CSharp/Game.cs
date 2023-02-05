@@ -273,17 +273,28 @@ namespace AloneHero_CSharp
                 //{
                 //    enemyEl = new XElement("Goblin");
                 //}
-                XElement enemyEl = new XElement("enemy");
-                XAttribute xEnemy = new XAttribute("x", enemy.X.ToString());
-                XAttribute yEnemy = new XAttribute("y", enemy.Y.ToString());
-                XAttribute healthEnemy = new XAttribute("Health", enemy.Health.ToString());
-                XAttribute speedEnemy = new XAttribute("Speed", enemy.Speed.ToString());
-                XAttribute strengthEnemy = new XAttribute("Strength", enemy.Strength.ToString());
-                enemyEl.Add(xEnemy);
-                enemyEl.Add(yEnemy);
-                enemyEl.Add(healthEnemy);
-                enemyEl.Add(speedEnemy);
-                enemyEl.Add(strengthEnemy);
+                XElement enemyEl;
+                if (enemy == null)
+                {
+                    enemyEl = new XElement("enemy");
+                    XAttribute state = new XAttribute("State", "Death");
+                }
+                else
+                {
+                    enemyEl = new XElement("enemy");
+                    XAttribute xEnemy = new XAttribute("x", enemy.X.ToString());
+                    XAttribute yEnemy = new XAttribute("y", enemy.Y.ToString());
+                    XAttribute healthEnemy = new XAttribute("Health", enemy.Health.ToString());
+                    XAttribute speedEnemy = new XAttribute("Speed", enemy.Speed.ToString());
+                    XAttribute strengthEnemy = new XAttribute("Strength", enemy.Strength.ToString());
+                    XAttribute state = new XAttribute("State", "Alive");
+                    enemyEl.Add(xEnemy);
+                    enemyEl.Add(yEnemy);
+                    enemyEl.Add(healthEnemy);
+                    enemyEl.Add(speedEnemy);
+                    enemyEl.Add(strengthEnemy);
+                    enemyEl.Add(state);
+                }
 
                 enemyRoot.Add(enemyEl);               
             }

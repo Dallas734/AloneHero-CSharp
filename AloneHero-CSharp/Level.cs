@@ -440,7 +440,7 @@ namespace AloneHero_CSharp
                 {
                     foreach (Enemy enemy in enemies)
                     {
-                        if (player.GetHitRect().Intersects(enemy.GetRect()) && enemy.CollisionWithPlayer == false && player.Dy == 0 && player.State == States.HIT && enemy.State != States.HIT && ((player.Direction == Directions.LEFT && player.X > enemy.X) || (player.Direction == Directions.RIGHT && player.X < enemy.X)) && enemy.State != States.DEATH)
+                        if (enemy != null && player.GetHitRect().Intersects(enemy.GetRect()) && enemy.CollisionWithPlayer == false && player.Dy == 0 && player.State == States.HIT && enemy.State != States.HIT && ((player.Direction == Directions.LEFT && player.X > enemy.X) || (player.Direction == Directions.RIGHT && player.X < enemy.X)) && enemy.State != States.DEATH)
                         {
                             ChangeParamEvent?.Invoke(player, new OrderEventArgs(Codes.DAMAGE_C, player.Strength, enemy));
                             //messageToEnemy = new Message(Codes.DAMAGE_C, player.Strength, null);
@@ -693,18 +693,28 @@ namespace AloneHero_CSharp
             // Проходимся по всем врагам
             foreach (Enemy enemy in enemies)
             {
-                enemy.Update(time, window, this);
+                if (enemy != null)  enemy.Update(time, window, this);
 
                 //window.Draw(enemy.GetSprite(enemy.State));
             }
-            foreach (Enemy enemy in enemies)
+            for (int i = 0; i < enemies.Count; i++)
             {
-                if (enemy.State == States.DEATH && enemy.Counter > 1)
+                if (enemies[i] != null && enemies[i].State == States.DEATH && enemies[i].Counter > 1)
                 {
-                    enemies.Remove(enemy);
+                    enemies[i] = null;
+                    //enemies.Remove(enemy);
                     return;
                 }
             }
+
+            //foreach (Enemy enemy in enemies)
+            //{
+            //    if (enemy.State == States.DEATH && enemy.Counter > 1)
+            //    {
+            //        enemies.Remove(enemy);
+            //        return;
+            //    }
+            //}
 
             // Проходимся по предметам поддержки
             foreach (SupportItem supportItem in supportItems)
@@ -736,7 +746,7 @@ namespace AloneHero_CSharp
             // Рисуем врагов
             foreach (Enemy enemy in enemies)
             {
-                window.Draw(enemy.GetSprite(enemy.State));
+                if (enemy != null) window.Draw(enemy.GetSprite(enemy.State));
             }
             //foreach (Enemy enemy in enemies)
             //{
