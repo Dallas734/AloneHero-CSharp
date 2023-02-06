@@ -278,6 +278,7 @@ namespace AloneHero_CSharp
                 {
                     enemyEl = new XElement("enemy");
                     XAttribute state = new XAttribute("State", "Death");
+                    enemyEl.Add(state);
                 }
                 else
                 {
@@ -334,17 +335,29 @@ namespace AloneHero_CSharp
             XmlNodeList enemies = levelEl.GetElementsByTagName("enemy");
             for (int i = 0; i < enemies.Count; i++)
             {
-                level.LoadEnemy += level.GetEnemies()[i].GetMessageEventHandler;
-                StatsMove += level.GetMessageEventHandler;
-                x = double.Parse(enemies[i].Attributes.GetNamedItem("x").Value);
-                y = double.Parse(enemies[i].Attributes.GetNamedItem("y").Value);
-                health = int.Parse(enemies[i].Attributes.GetNamedItem("Health").Value);
-                speed = double.Parse(enemies[i].Attributes.GetNamedItem("Speed").Value);
-                strenght = int.Parse(enemies[i].Attributes.GetNamedItem("Strength").Value);
-                Skeleton enemy = new Skeleton(x, y, speed, health, strenght, level);
-                StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD_ENEMY, enemy, enemy));
-                level.LoadEnemy -= level.GetEnemies()[i].GetMessageEventHandler;
-                StatsMove -= level.GetMessageEventHandler;
+                if (enemies[i].Attributes.GetNamedItem("State").Value == "Death")
+                {
+                    level.LoadEnemy += level.GetEnemies()[i].GetMessageEventHandler;
+                    StatsMove += level.GetMessageEventHandler;
+                    Skeleton enemy = new Skeleton(x, y, speed, 0, strenght, level);
+                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD_ENEMY, enemy, enemy));
+                    level.LoadEnemy -= level.GetEnemies()[i].GetMessageEventHandler;
+                    StatsMove -= level.GetMessageEventHandler;
+                }
+                else
+                {
+                    level.LoadEnemy += level.GetEnemies()[i].GetMessageEventHandler;
+                    StatsMove += level.GetMessageEventHandler;
+                    x = double.Parse(enemies[i].Attributes.GetNamedItem("x").Value);
+                    y = double.Parse(enemies[i].Attributes.GetNamedItem("y").Value);
+                    health = int.Parse(enemies[i].Attributes.GetNamedItem("Health").Value);
+                    speed = double.Parse(enemies[i].Attributes.GetNamedItem("Speed").Value);
+                    strenght = int.Parse(enemies[i].Attributes.GetNamedItem("Strength").Value);
+                    Skeleton enemy = new Skeleton(x, y, speed, health, strenght, level);
+                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD_ENEMY, enemy, enemy));
+                    level.LoadEnemy -= level.GetEnemies()[i].GetMessageEventHandler;
+                    StatsMove -= level.GetMessageEventHandler;
+                }
             }
 
 

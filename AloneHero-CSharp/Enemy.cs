@@ -115,10 +115,19 @@ namespace AloneHero_CSharp
             else if (args.Recipient is Enemy && args.Code == Codes.STATS_MOVE_LOAD_ENEMY && changed == false)
             {
                 Enemy enemy = (Enemy)args.Entity;
-                X = enemy.X;
-                Y = enemy.Y;
-                Health = enemy.Health;
-                changed = true;
+                if (enemy.Health == 0)
+                {
+                    State = States.DEATH;
+                    Health = 0;
+                    changed = true;
+                }
+                else
+                {
+                    X = enemy.X;
+                    Y = enemy.Y;
+                    Health = enemy.Health;
+                    changed = true;
+                }
             }
         }
         //public override void GetMessage(Message message)
