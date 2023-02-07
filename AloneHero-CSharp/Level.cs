@@ -17,6 +17,7 @@ namespace AloneHero_CSharp
         public event OrderEventHandler EndGame;
         public event OrderEventHandler NextLevel;
         public event OrderEventHandler LoadEnemy;
+        public event OrderEventHandler LoadSupportItems;
 
         private Player player;
         private List<Enemy> enemies;
@@ -455,7 +456,7 @@ namespace AloneHero_CSharp
                 {
                     foreach (SupportItem supportItem in supportItems)
                     {
-                        if (player.GetRect().Intersects(supportItem.GetRect()) && !supportItem.Used)
+                        if (supportItem != null && player.GetRect().Intersects(supportItem.GetRect()) && !supportItem.Used)
                         {
                             // Подписка на это событие
                             ChangeParamEvent += supportItem.GetMessageEventHandler;
@@ -717,15 +718,25 @@ namespace AloneHero_CSharp
             //}
 
             // Проходимся по предметам поддержки
-            foreach (SupportItem supportItem in supportItems)
+            for (int i = 0; i < supportItems.Count; i++)
             {
-                supportItem.Update(time, window);
-                if (supportItem.Used)
+                if (supportItems[i] != null)
                 {
-                    supportItems.Remove(supportItem);
-                    return;
+                    supportItems[i].Update(time, window);
+                    if (supportItems[i].Used) supportItems[i] = null;
                 }
             }
+
+            //foreach (SupportItem supportItem in supportItems)
+            //{
+            //    supportItem.Update(time, window);
+            //    if (supportItem.Used)
+            //    {
+            //        supportItems.Remove(supportItem);
+            //        return;
+            //    }
+            //}
+
 
             // Отрисовка
             window.SetView(view);
@@ -760,7 +771,7 @@ namespace AloneHero_CSharp
             // Рисуем предметы поддержки
             foreach (SupportItem supportItem in supportItems)
             {
-                window.Draw(supportItem.Sprite);
+                if (supportItem != null) window.Draw(supportItem.Sprite);
             }
 
         }

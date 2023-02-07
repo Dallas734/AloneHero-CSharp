@@ -31,8 +31,7 @@ namespace AloneHero_CSharp
             beginY = y;
             this.improveUnits = improveUnits;
             up = true;
-            Used = false;
-            
+            Used = false;  
         }
 
         public void Update(float time, RenderWindow window)
@@ -60,6 +59,10 @@ namespace AloneHero_CSharp
             if (args.Code == Codes.IMPROVE_STATS && sender is Player && args.Recipient is SupportItem)
             {
                 Improve((Player)sender);
+            }
+            if (args.Code == Codes.STATS_MOVE_LOAD && args.Recipient is SupportItem)
+            {
+                Used = args.Used;
             }
         }
 

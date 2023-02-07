@@ -259,20 +259,7 @@ namespace AloneHero_CSharp
 
             XElement enemyRoot = new XElement("enemies");
             foreach (Enemy enemy in level.GetEnemies())
-            {
-                //XElement enemyEl = null;
-                //if (enemy is Skeleton)
-                //{
-                //    enemyEl = new XElement("Skeleton");
-                //}
-                //else if (enemy is Mushroom)
-                //{
-                //    enemyEl = new XElement("Mushroom");
-                //}
-                //else if (enemy is Goblin)
-                //{
-                //    enemyEl = new XElement("Goblin");
-                //}
+            {                
                 XElement enemyEl;
                 if (enemy == null)
                 {
@@ -300,6 +287,27 @@ namespace AloneHero_CSharp
                 enemyRoot.Add(enemyEl);               
             }
             levelEl.Add(enemyRoot);
+
+            // Предметы поддержки 
+            XElement supportItemsRoot = new XElement("supportItems");
+            foreach (SupportItem supportItem in level.GetSupportItems())
+            {
+                XElement supportItemEl;
+                if (supportItem == null)
+                {
+                    supportItemEl = new XElement("supportItem");
+                    XAttribute used = new XAttribute("Used", "true");
+                    supportItemEl.Add(used);
+                }
+                else
+                {
+                    supportItemEl = new XElement("supportItem");
+                    XAttribute used = new XAttribute("Used", "false");
+                    supportItemEl.Add(used);
+                }
+                supportItemsRoot.Add(supportItemEl);
+            }
+            levelEl.Add(supportItemsRoot);
 
             // Записываем корневой элемент 
             xdoc.Add(levelEl);
@@ -360,7 +368,22 @@ namespace AloneHero_CSharp
                 }
             }
 
-
+            // Получаем предмет поддержки
+            XmlNodeList supportItems = levelEl.GetElementsByTagName("supportItem");
+            for (int i = 0; i < supportItems.Count; i++)
+            {
+                if (supportItems[i].Attributes.GetNamedItem("Used").Value == "true")
+                {
+                    level.LoadSupportItems += level.GetSupportItems()[i].GetMessageEventHandler;
+                    level.ChangeParamEvent += level.GetSupportItems()[i].GetMessageEventHandler;
+                    StatsMove += level.GetMessageEventHandler;
+                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD, true, level.GetSupportItems()[i]));
+                    level.LoadEnemy -= level.GetSupportItems()[i].GetMessageEventHandler;
+                    level.ChangeParamEvent -= level.GetSupportItems()[i].GetMessageEventHandler;
+                    StatsMove -= level.GetMessageEventHandler;
+                }           
+            }
+            
             //foreach (Enemy enemyLvl in level.GetEnemies())
             //{
             //    level.ChangeParamEvent += enemyLvl.GetMessageEventHandler;

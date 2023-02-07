@@ -20,6 +20,8 @@ namespace AloneHero_CSharp
         public int Strength { get; set; } // Сила
         public int Coins { get; set; }
 
+        public bool Used { get; set; }
+
         public Entity Entity { get; set; }
         public object Recipient { get; set; }
         public OrderEventArgs (Codes code, int intUnits, double x, double y, double dx, double dy, object recipient)
@@ -37,6 +39,13 @@ namespace AloneHero_CSharp
         {
             Code = code;
             IntUnits = units;
+            Recipient = recipient;
+        }
+
+        public OrderEventArgs(Codes code, bool unit, object recipient)
+        {
+            Code = code;
+            Used = unit;
             Recipient = recipient;
         }
 
