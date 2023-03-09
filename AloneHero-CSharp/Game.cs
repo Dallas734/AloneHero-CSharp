@@ -27,10 +27,7 @@ namespace AloneHero_CSharp
         {
             endGame = false;
             curLevel = 0;
-            // Инициализация уровней (на будущее)
-            levels = new List<Level>();
-            levels.Add(new Level("map_XML_2.tmx", this));
-            levels.Add(new Level("map_XML_1.tmx", this));
+            InitializeLevels();
             // Подписка на событие
             foreach (Level level1 in levels)
             {
@@ -131,11 +128,12 @@ namespace AloneHero_CSharp
                 if (x == 0)
                 {
                     RenderWindow PLAY = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
-                    //window.Close();
+                    // window.Close();
 
                     Clock clock = new Clock();
 
-                    level = levels[curLevel];
+                    InitializeLevels();
+                    level = levels[0];
 
                     // Интерфейс
                     GameInterface gameInterface = new GameInterface(this);
@@ -343,16 +341,16 @@ namespace AloneHero_CSharp
             XmlNodeList enemies = levelEl.GetElementsByTagName("enemy");
             for (int i = 0; i < enemies.Count; i++)
             {
-                if (enemies[i].Attributes.GetNamedItem("State").Value == "Death")
+                if (enemies[i].Attributes.GetNamedItem("State").Value == "Death" && level.GetEnemies()[i] != null)
                 {
                     level.LoadEnemy += level.GetEnemies()[i].GetMessageEventHandler;
                     StatsMove += level.GetMessageEventHandler;
                     Skeleton enemy = new Skeleton(x, y, speed, 0, strenght, level);
                     StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD_ENEMY, enemy, enemy));
-                    level.LoadEnemy -= level.GetEnemies()[i].GetMessageEventHandler;
+                    if (level.GetEnemies()[i] != null) level.LoadEnemy -= level.GetEnemies()[i].GetMessageEventHandler;
                     StatsMove -= level.GetMessageEventHandler;
                 }
-                else
+                else if (level.GetEnemies()[i] != null)
                 {
                     level.LoadEnemy += level.GetEnemies()[i].GetMessageEventHandler;
                     StatsMove += level.GetMessageEventHandler;
@@ -372,13 +370,12 @@ namespace AloneHero_CSharp
             XmlNodeList supportItems = levelEl.GetElementsByTagName("supportItem");
             for (int i = 0; i < supportItems.Count; i++)
             {
-                if (supportItems[i].Attributes.GetNamedItem("Used").Value == "true")
+                if (supportItems[i].Attributes.GetNamedItem("Used").Value == "true" && level.GetSupportItems()[i] != null)
                 {
                     level.LoadSupportItems += level.GetSupportItems()[i].GetMessageEventHandler;
                     level.ChangeParamEvent += level.GetSupportItems()[i].GetMessageEventHandler;
                     StatsMove += level.GetMessageEventHandler;
-                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD, true, level.GetSupportItems()[i]));
-                    level.LoadEnemy -= level.GetSupportItems()[i].GetMessageEventHandler;
+                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD, true, level.GetSupportItems()[i]))
                     level.ChangeParamEvent -= level.GetSupportItems()[i].GetMessageEventHandler;
                     StatsMove -= level.GetMessageEventHandler;
                 }           
@@ -397,5 +394,12 @@ namespace AloneHero_CSharp
 
         }
 
+        private void InitializeLevels()
+        {
+            // Инициализация уровней (на будущее)
+            levels = new List<Level>();
+            levels.Add(new Level("map_XML_2.tmx", this));
+            levels.Add(new Level("map_XML_1.tmx", this));
+        }
     }
 }

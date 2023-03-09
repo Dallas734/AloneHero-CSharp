@@ -24,6 +24,8 @@ namespace AloneHero_CSharp
 
         public Entity Entity { get; set; }
         public object Recipient { get; set; }
+
+        public int IterNum { get; set; }
         public OrderEventArgs (Codes code, int intUnits, double x, double y, double dx, double dy, object recipient)
         {
             Code = code;
@@ -62,6 +64,15 @@ namespace AloneHero_CSharp
             Entity = entity;
             Recipient = recipient;
         }
- 
+
+        public OrderEventArgs(Codes code, Entity entity, object recipient, int iterNum)
+        {
+            Code = code;
+            Entity = entity;
+            Recipient = recipient;
+            IterNum = iterNum;
+        }
+
+
     }
 }

@@ -524,7 +524,16 @@ namespace AloneHero_CSharp
 
             if (args.Code == Codes.STATS_MOVE_LOAD_ENEMY)
             {
-                LoadEnemy?.Invoke(null, args);
+                // Удаление врага, если он мертв в файле сохранения.
+                if (args.Entity.Health == 0)
+                {
+                    enemies[args.IterNum] = null;
+                }
+                else
+                {
+                    LoadEnemy?.Invoke(null, args);
+                }
+                
             }
 
             //if (args.Code == Codes.ENEMY_STATS_MOVE)

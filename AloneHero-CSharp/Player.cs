@@ -127,6 +127,7 @@ namespace AloneHero_CSharp
                 //level.GetMessage(message);
 
                 level.ViewOnPlayer(this);
+                //return;
             }
             else if (Keyboard.IsKeyPressed(Keyboard.Key.Left) && OnGround)
             {
@@ -138,6 +139,7 @@ namespace AloneHero_CSharp
                 //message = new Message(Codes.HIT_C, 0, this, X, Y, Dx, 0);
                 //level.GetMessage(message);
                 level.ViewOnPlayer(this);
+                //return;
             }
             else if (State == States.IDLE)
             {

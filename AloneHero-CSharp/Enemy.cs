@@ -66,67 +66,62 @@ namespace AloneHero_CSharp
 
         public override void GetMessageEventHandler(object sender, OrderEventArgs args)
         {
-            if (args.Recipient is Enemy && Equals(this, args.Recipient))
+            if (args.Recipient is Enemy)
             {
-                //Entity senderEntity = (Entity)sender;
+                Enemy enemy = (Enemy)args.Recipient;
+                // Проводится проверка правильности получателя по его координатам
+                if (Equals(this, args.Recipient) && X == enemy.X && Y == enemy.Y)
+                {
+                    //Entity senderEntity = (Entity)sender;
 
-                if (args.Code == Codes.DAMAGE_C)
-                {
-                    CollisionWithPlayer = true;
-                    State = States.DAMAGE;
-                    DamagePr = args.IntUnits;
-                }
-                else if (args.Code == Codes.RUN_C)
-                {
-                    CollisionWithPlayer = false;
-                    State = States.RUN;
-                }
-                else if (args.Code == Codes.HIT_C)
-                {
-                    CollisionWithPlayer = true;
-                    State = States.HIT;
-                    if (sender is Player)
+                    if (args.Code == Codes.DAMAGE_C)
                     {
-                        AdditionalFeatures((Player)sender); // с отправкой сообщения игроку
+                        CollisionWithPlayer = true;
+                        State = States.DAMAGE;
+                        DamagePr = args.IntUnits;
                     }
+                    else if (args.Code == Codes.RUN_C)
+                    {
+                        CollisionWithPlayer = false;
+                        State = States.RUN;
+                    }
+                    else if (args.Code == Codes.HIT_C)
+                    {
+                        CollisionWithPlayer = true;
+                        State = States.HIT;
+                        if (sender is Player)
+                        {
+                            AdditionalFeatures((Player)sender); // с отправкой сообщения игроку
+                        }
+                    }
+                    else if (args.Code == Codes.FALL_C)
+                    {
+                        Y = args.Y;
+                        Dy = args.Dy;
+                        State = States.RUN;
+                        OnGround = true;
+                    }
+                    else if (args.Code == Codes.JUMP_C)
+                    {
+                        Y = args.Y;
+                    }
+                    else if (args.Code == Codes.CHANGE_X)
+                    {
+                        X = args.X;
+                    }
+                    else if (args.Code == Codes.ENEMY_BARIER)
+                    {
+                        if (Direction == Directions.RIGHT) Direction = Directions.LEFT;
+                        else Direction = Directions.RIGHT;
+                    }
+
                 }
-                else if (args.Code == Codes.FALL_C)
-                {
-                    Y = args.Y;
-                    Dy = args.Dy;
-                    State = States.RUN;
-                    OnGround = true;
-                }
-                else if (args.Code == Codes.JUMP_C)
-                {
-                    Y = args.Y;
-                }
-                else if (args.Code == Codes.CHANGE_X)
-                {
-                    X = args.X;
-                }
-                else if (args.Code == Codes.ENEMY_BARIER)
-                {
-                    if (Direction == Directions.RIGHT) Direction = Directions.LEFT;
-                    else Direction = Directions.RIGHT;
-                }
-                
-            }
-            else if (args.Recipient is Enemy && args.Code == Codes.STATS_MOVE_LOAD_ENEMY && changed == false)
-            {
-                Enemy enemy = (Enemy)args.Entity;
-                if (enemy.Health == 0)
-                {
-                    State = States.DEATH;
-                    Health = 0;
-                    changed = true;
-                }
-                else
-                {
-                    X = enemy.X;
-                    Y = enemy.Y;
-                    Health = enemy.Health;
-                    changed = true;
+                else if (args.Code == Codes.STATS_MOVE_LOAD_ENEMY && changed == false)
+                {                 
+                        X = enemy.X;
+                        Y = enemy.Y;
+                        Health = enemy.Health;
+                        changed = true;
                 }
             }
         }
