@@ -51,6 +51,7 @@ namespace AloneHero_CSharp
             font = new Font("timesnewromanpsmt.ttf");
             //Добавление обработчика событий (подписка на это событие). Подписка на игрока
             player.SomeActionEvent += GetMessageEventHandler;
+            //game.StatsMove += GetMessageEventHandler;
             //game.PlayerStatsMove += GetMessageEventHandler;
             LevelEnd = false;
         }
@@ -524,6 +525,7 @@ namespace AloneHero_CSharp
 
             if (args.Code == Codes.STATS_MOVE_LOAD_ENEMY)
             {
+                Enemy enemyArgs = (Enemy)args.Entity;
                 // Удаление врага, если он мертв в файле сохранения.
                 if (args.Entity.Health == 0)
                 {
@@ -533,7 +535,17 @@ namespace AloneHero_CSharp
                 {
                     LoadEnemy?.Invoke(null, args);
                 }
-                
+                //for (int i = 0; i < enemies.Count; i++ )
+                //{
+                //    if (enemyArgs.DefaultX == enemies[i].DefaultX && enemyArgs.DefaultY == enemies[i].DefaultY && enemyArgs.Health == 0)
+                //    {
+                //        enemies[i] = null;
+                //    }
+                //    else
+                //    {
+                //        LoadEnemy?.Invoke(null, args);
+                //    }
+                //}
             }
 
             //if (args.Code == Codes.ENEMY_STATS_MOVE)
@@ -672,6 +684,8 @@ namespace AloneHero_CSharp
                 if (nameOfEnemy == "Mushroom") enemy = new Mushroom(enemyObjects[i].Rect.Left, enemyObjects[i].Rect.Top, 0.08, 300, 50, this);
                 else if (nameOfEnemy == "Skeleton") enemy = new Skeleton(enemyObjects[i].Rect.Left, enemyObjects[i].Rect.Top, 0.08, 300, 50, this);
                 else if (nameOfEnemy == "Goblin") enemy = new Goblin(enemyObjects[i].Rect.Left, enemyObjects[i].Rect.Top, 0.08, 300, 50, this);
+                enemy.DefaultX = enemyObjects[i].Rect.Left;
+                enemy.DefaultY = enemyObjects[i].Rect.Top;
 
                 enemies.Add(enemy);
             }

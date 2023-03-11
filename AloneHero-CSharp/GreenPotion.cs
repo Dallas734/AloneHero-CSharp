@@ -18,6 +18,8 @@ namespace AloneHero_CSharp
             image = new Image(FileName);
             texture = new Texture(image);
             Sprite = new Sprite(texture);
+            level.LoadSupportItems += GetMessageEventHandler;
+            level.ChangeParamEvent += GetMessageEventHandler;
         }
 
         public override void Improve(Entity entity)

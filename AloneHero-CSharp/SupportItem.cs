@@ -13,6 +13,9 @@ namespace AloneHero_CSharp
         public event OrderEventHandler UsedEvent;
 
         protected double x, y;
+        public double DefaultX { get; set; }
+        public double DeafaultY { get; set; }
+
         protected double beginY;
         protected Image image;
         protected Texture texture;
@@ -56,14 +59,23 @@ namespace AloneHero_CSharp
         public abstract void Improve(Entity entity);
         public void GetMessageEventHandler(object sender, OrderEventArgs args)
         {
-            if (args.Code == Codes.IMPROVE_STATS && sender is Player && args.Recipient is SupportItem)
+            //if (args.Recipient is SupportItem)
+            //{ 
+            //if (DefaultX == args)
+            if (sender is Player)
             {
-                Improve((Player)sender);
+                Player player = (Player)sender;
+                if (args.Code == Codes.IMPROVE_STATS && sender is Player && args.Recipient is SupportItem && player.GetRect().Intersects(GetRect()))
+                {
+                    Improve((Player)sender);
+                }
             }
-            if (args.Code == Codes.STATS_MOVE_LOAD && args.Recipient is SupportItem)
+            if (args.Code == Codes.STATS_MOVE_LOAD && args.Recipient is SupportItem && args.Used)
             {
                 Used = args.Used;
+                args.Used = false;
             }
+            
         }
 
         public FloatRect GetRect()

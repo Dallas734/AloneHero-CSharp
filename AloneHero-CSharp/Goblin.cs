@@ -31,6 +31,7 @@ namespace AloneHero_CSharp
             SetSprite("Idle.png", States.IDLE, xBeginSprite, yBeginSprite, Width, Height);
             // Событие на событие
             level.ChangeParamEvent += GetMessageEventHandler;
+            level.LoadEnemy += GetMessageEventHandler;
         }
 
         public override void AdditionalFeatures(Entity entity)

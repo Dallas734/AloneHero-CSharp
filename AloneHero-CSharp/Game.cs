@@ -256,6 +256,7 @@ namespace AloneHero_CSharp
             levelEl.Add(player);
 
             XElement enemyRoot = new XElement("enemies");
+            int i = 0;
             foreach (Enemy enemy in level.GetEnemies())
             {                
                 XElement enemyEl;
@@ -263,7 +264,9 @@ namespace AloneHero_CSharp
                 {
                     enemyEl = new XElement("enemy");
                     XAttribute state = new XAttribute("State", "Death");
+                    XAttribute iterNum = new XAttribute("iterNum", i);
                     enemyEl.Add(state);
+                    enemyEl.Add(iterNum);
                 }
                 else
                 {
@@ -273,6 +276,8 @@ namespace AloneHero_CSharp
                     XAttribute healthEnemy = new XAttribute("Health", enemy.Health.ToString());
                     XAttribute speedEnemy = new XAttribute("Speed", enemy.Speed.ToString());
                     XAttribute strengthEnemy = new XAttribute("Strength", enemy.Strength.ToString());
+                    XAttribute xDefaultEnemy = new XAttribute("xDefault", enemy.DefaultX.ToString());
+                    XAttribute yDefaultEnemy = new XAttribute("yDefault", enemy.DefaultY.ToString());
                     XAttribute state = new XAttribute("State", "Alive");
                     enemyEl.Add(xEnemy);
                     enemyEl.Add(yEnemy);
@@ -280,13 +285,17 @@ namespace AloneHero_CSharp
                     enemyEl.Add(speedEnemy);
                     enemyEl.Add(strengthEnemy);
                     enemyEl.Add(state);
+                    enemyEl.Add(xDefaultEnemy);
+                    enemyEl.Add(yDefaultEnemy);
                 }
 
-                enemyRoot.Add(enemyEl);               
+                enemyRoot.Add(enemyEl);
+                i++;
             }
             levelEl.Add(enemyRoot);
 
             // Предметы поддержки 
+            i = 0;
             XElement supportItemsRoot = new XElement("supportItems");
             foreach (SupportItem supportItem in level.GetSupportItems())
             {
@@ -343,16 +352,14 @@ namespace AloneHero_CSharp
             {
                 if (enemies[i].Attributes.GetNamedItem("State").Value == "Death" && level.GetEnemies()[i] != null)
                 {
-                    level.LoadEnemy += level.GetEnemies()[i].GetMessageEventHandler;
                     StatsMove += level.GetMessageEventHandler;
                     Skeleton enemy = new Skeleton(x, y, speed, 0, strenght, level);
-                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD_ENEMY, enemy, enemy));
-                    if (level.GetEnemies()[i] != null) level.LoadEnemy -= level.GetEnemies()[i].GetMessageEventHandler;
+                    int iter = int.Parse(enemies[i].Attributes.GetNamedItem("iterNum").Value);
+                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD_ENEMY, enemy, enemy, iter));
                     StatsMove -= level.GetMessageEventHandler;
                 }
                 else if (level.GetEnemies()[i] != null)
                 {
-                    level.LoadEnemy += level.GetEnemies()[i].GetMessageEventHandler;
                     StatsMove += level.GetMessageEventHandler;
                     x = double.Parse(enemies[i].Attributes.GetNamedItem("x").Value);
                     y = double.Parse(enemies[i].Attributes.GetNamedItem("y").Value);
@@ -360,8 +367,9 @@ namespace AloneHero_CSharp
                     speed = double.Parse(enemies[i].Attributes.GetNamedItem("Speed").Value);
                     strenght = int.Parse(enemies[i].Attributes.GetNamedItem("Strength").Value);
                     Skeleton enemy = new Skeleton(x, y, speed, health, strenght, level);
+                    enemy.DefaultX = double.Parse(enemies[i].Attributes.GetNamedItem("xDefault").Value);
+                    enemy.DefaultY = double.Parse(enemies[i].Attributes.GetNamedItem("yDefault").Value);
                     StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD_ENEMY, enemy, enemy));
-                    level.LoadEnemy -= level.GetEnemies()[i].GetMessageEventHandler;
                     StatsMove -= level.GetMessageEventHandler;
                 }
             }
@@ -372,11 +380,8 @@ namespace AloneHero_CSharp
             {
                 if (supportItems[i].Attributes.GetNamedItem("Used").Value == "true" && level.GetSupportItems()[i] != null)
                 {
-                    level.LoadSupportItems += level.GetSupportItems()[i].GetMessageEventHandler;
-                    level.ChangeParamEvent += level.GetSupportItems()[i].GetMessageEventHandler;
                     StatsMove += level.GetMessageEventHandler;
-                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD, true, level.GetSupportItems()[i]))
-                    level.ChangeParamEvent -= level.GetSupportItems()[i].GetMessageEventHandler;
+                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_LOAD, true, level.GetSupportItems()[i]));
                     StatsMove -= level.GetMessageEventHandler;
                 }           
             }
