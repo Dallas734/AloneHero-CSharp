@@ -28,12 +28,7 @@ namespace AloneHero_CSharp
             endGame = false;
             curLevel = 0;
             InitializeLevels();
-            // Подписка на событие
-            foreach (Level level1 in levels)
-            {
-                level1.EndGame += GetMessageEventHandler;
-                level1.NextLevel += GetMessageEventHandler;
-            }
+            
         }
 
         public bool StartGame()
@@ -405,6 +400,12 @@ namespace AloneHero_CSharp
             levels = new List<Level>();
             levels.Add(new Level("map_XML_2.tmx", this));
             levels.Add(new Level("map_XML_1.tmx", this));
+            // Подписка на событие
+            foreach (Level level1 in levels)
+            {
+                level1.EndGame += GetMessageEventHandler;
+                level1.NextLevel += GetMessageEventHandler;
+            }
         }
     }
 }
