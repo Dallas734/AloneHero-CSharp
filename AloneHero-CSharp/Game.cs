@@ -209,6 +209,10 @@ namespace AloneHero_CSharp
                     while(ABOUT.IsOpen)
                     {
                         ABOUT.DispatchEvents();
+                        // Тут надписи
+                        Font font = new Font("timesnewromanpsmt.ttf");
+                        Text text = new Text("Игра платформер о рыцаре.\nЦель игры пройти все уровни\nДвижение: WASD\nПрыжок: Space\nУдар: стрелки\nВернидуб Марк, 2-41\nИГЭУ, Иваново", font, 40);
+                        ABOUT.Draw(text);
                         ABOUT.Display();
                     }
                 }

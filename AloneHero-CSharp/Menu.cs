@@ -10,6 +10,7 @@ namespace AloneHero_CSharp
     {
         private Font font;
         private List<Text> mainMenu;
+        private Text title;
         public int MenuNum { get; private set; }
 
         public Menu(float width, float height)
@@ -17,24 +18,29 @@ namespace AloneHero_CSharp
             MenuNum = 0;
             font = new Font("timesnewromanpsmt.ttf");
             mainMenu = new List<Text>();
+
+            title = new Text("ALONE HERO", font, 100);
+            title.Position = new Vector2f(400, 100);
+            title.FillColor = Color.Red;
+
             mainMenu.Add(new Text("New Game", font, 70));
-            mainMenu[0].Position = new Vector2f(400, 200);
+            mainMenu[0].Position = new Vector2f(400, 300);
 
             mainMenu.Add(new Text("Load", font, 70));
-            mainMenu[1].Position = new Vector2f(400, 300);
+            mainMenu[1].Position = new Vector2f(400, 400);
 
             mainMenu.Add(new Text("About", font, 70));
-            mainMenu[2].Position = new Vector2f(400, 400);
+            mainMenu[2].Position = new Vector2f(400, 500);
 
             mainMenu.Add(new Text("Exit", font, 70));
-            mainMenu[3].Position = new Vector2f(400, 500);
+            mainMenu[3].Position = new Vector2f(400, 600);
 
             mainMenu[MenuNum].FillColor = Color.Blue;
         }
 
         public void Draw(RenderWindow window)
         {
-            
+            window.Draw(title);   
             foreach (Text element in mainMenu)
             {
                 window.Draw(element);
