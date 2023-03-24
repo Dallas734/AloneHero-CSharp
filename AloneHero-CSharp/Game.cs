@@ -310,8 +310,13 @@ namespace AloneHero_CSharp
                     supportItemEl = new XElement("supportItem");
                     XAttribute used = new XAttribute("Used", "false");
                     supportItemEl.Add(used);
+                    XAttribute xDefaultSupIt = new XAttribute("xDefault", supportItem.DefaultX.ToString());
+                    XAttribute yDefaultSupIt = new XAttribute("yDefault", supportItem.DeafaultY.ToString());
+                    supportItemEl.Add(xDefaultSupIt);
+                    supportItemEl.Add(yDefaultSupIt);
                 }
                 supportItemsRoot.Add(supportItemEl);
+
             }
             levelEl.Add(supportItemsRoot);
 

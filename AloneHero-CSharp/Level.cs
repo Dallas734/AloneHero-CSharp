@@ -695,12 +695,15 @@ namespace AloneHero_CSharp
         public void FillSupportItem(string nameOfSupportItem)
         {
             List<ObjectLvl> supportObjects = GetObjects(nameOfSupportItem);
-            foreach (ObjectLvl supportObject in supportObjects)
+            for (int i = 0; i < supportObjects.Count; i++)
             {
                 SupportItem supportItem = null;
-                if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObject.Rect.Left, supportObject.Rect.Top, 0.03, this);
-                else if (nameOfSupportItem == "RedPotion") supportItem = new RedPotion(supportObject.Rect.Left, supportObject.Rect.Top, 20, this);
-                else if (nameOfSupportItem == "Coin") supportItem = new Coin(supportObject.Rect.Left, supportObject.Rect.Top, 15, this);
+                if (nameOfSupportItem == "GreenPotion") supportItem = new GreenPotion(supportObjects[i].Rect.Left, supportObjects[i].Rect.Top, 0.03, this);
+                else if (nameOfSupportItem == "RedPotion") supportItem = new RedPotion(supportObjects[i].Rect.Left, supportObjects[i].Rect.Top, 20, this);
+                else if (nameOfSupportItem == "Coin") supportItem = new Coin(supportObjects[i].Rect.Left, supportObjects[i].Rect.Top, 15, this);
+                supportItem.DefaultX = supportObjects[i].Rect.Left;
+                supportItem.DeafaultY = supportObjects[i].Rect.Top;
+
                 supportItems.Add(supportItem);
             }
         }

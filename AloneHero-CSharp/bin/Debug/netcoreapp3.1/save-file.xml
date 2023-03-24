@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <level curLevel="0">
-  <player x="857,6099999427803" y="408" Health="340" Speed="0,1" Coins="0" Strenght="50" />
+  <player x="838,2015250396735" y="408" Health="340" Speed="0,16" Coins="0" Strenght="50" />
   <enemies>
-    <enemy State="Death" iterNum="0" />
-    <enemy x="118,21129870891565" y="373" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="164" yDefault="371" />
-    <enemy State="Death" iterNum="2" />
+    <enemy x="421,74889938354494" y="410" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="466" yDefault="419" />
+    <enemy x="164,8625005722043" y="373" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="164" yDefault="371" />
+    <enemy x="355,13270057678204" y="329" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="369" yDefault="307" />
   </enemies>
   <supportItems>
-    <supportItem Used="false" />
     <supportItem Used="true" />
-    <supportItem Used="false" />
+    <supportItem Used="true" />
+    <supportItem Used="false" xDefault="1003" yDefault="410" />
   </supportItems>
 </level>
