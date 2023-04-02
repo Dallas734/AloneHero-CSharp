@@ -12,6 +12,7 @@ namespace AloneHero_CSharp
     class Game
     {
         private bool endGame;
+        private bool windowOpen;
         public delegate void OrderEventHandler(object sender, OrderEventArgs args);
         public event OrderEventHandler LoadGame;
         public event OrderEventHandler StatsMove;
@@ -86,6 +87,7 @@ namespace AloneHero_CSharp
             var window = (Window)sender;
             if (e.Code == Keyboard.Key.Escape)
             {
+                windowOpen = false;
                 if (sender == MENU)
                 {
                     window.Close();
@@ -115,13 +117,14 @@ namespace AloneHero_CSharp
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) endGame = true;
             
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Enter))
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Enter) && windowOpen == false)
             {
                
                 int x = mainMenu.MenuNum;
 
                 if (x == 0)
                 {
+                    windowOpen = true;
                     RenderWindow PLAY = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
                     // window.Close();
 
@@ -165,6 +168,7 @@ namespace AloneHero_CSharp
 
                 if (x == 1)
                 {
+                    windowOpen = true;
                     RenderWindow PLAY = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
                     Clock clock = new Clock();
                     LoadGameSaves();
@@ -203,6 +207,7 @@ namespace AloneHero_CSharp
 
                 if (x == 2)
                 {
+                    windowOpen = true;
                     RenderWindow ABOUT = new RenderWindow(new VideoMode(1200, 800), "About");
 
                     ABOUT.KeyPressed += Window_KeyPressed;

@@ -10,11 +10,16 @@ namespace AloneHero_CSharp
     {
         private Font font;
         private List<Text> mainMenu;
+        private Sprite background;
         private Text title;
         public int MenuNum { get; private set; }
 
         public Menu(float width, float height)
         {
+            //Image image = new Image("Images\\Menu\\Background.png");
+            background = new Sprite(new Texture(new Image("Images\\Menu\\Background.png")));
+            background.Scale = new Vector2f(1200, 800);
+
             MenuNum = 0;
             font = new Font("timesnewromanpsmt.ttf");
             mainMenu = new List<Text>();
@@ -40,6 +45,8 @@ namespace AloneHero_CSharp
 
         public void Draw(RenderWindow window)
         {
+
+            window.Draw(background);
             window.Draw(title);   
             foreach (Text element in mainMenu)
             {
