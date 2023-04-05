@@ -412,7 +412,8 @@ namespace AloneHero_CSharp
         {
             // Инициализация уровней (на будущее)
             levels = new List<Level>();
-            levels.Add(new Level("map_XML_2.tmx", this));
+            //levels.Add(new Level("map_XML_2.tmx", this));
+            levels.Add(new Level("Level_1.tmx", this));
             levels.Add(new Level("map_XML_1.tmx", this));
             // Подписка на событие
             foreach (Level level1 in levels)
