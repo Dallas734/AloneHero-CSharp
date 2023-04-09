@@ -37,7 +37,7 @@ namespace AloneHero_CSharp
             MENU = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
             mainMenu = new Menu(MENU.Size.X, MENU.Size.Y);
             
-
+            // Подписка на событие!
             MENU.KeyPressed += Window_KeyPressed;
 
             while (MENU.IsOpen)
@@ -70,6 +70,7 @@ namespace AloneHero_CSharp
         {
             if (args.Code == Codes.END_GAME)
             {
+                windowOpen = false;
                 endGame = true;
             }
             if (args.Code == Codes.NEXT_LEVEL && level.LevelEnd)

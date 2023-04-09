@@ -17,8 +17,9 @@ namespace AloneHero_CSharp
         public Menu(float width, float height)
         {
             //Image image = new Image("Images\\Menu\\Background.png");
-            background = new Sprite(new Texture(new Image("Images\\Menu\\Background.png")));
-            background.Scale = new Vector2f(1200, 800);
+            Image imageBG = new Image("Images\\Menu\\123.png");
+            background = new Sprite(new Texture(imageBG));
+            background.Scale = new Vector2f(width / imageBG.Size.X, height / imageBG.Size.Y);
 
             MenuNum = 0;
             font = new Font("timesnewromanpsmt.ttf");
