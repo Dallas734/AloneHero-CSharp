@@ -13,6 +13,7 @@ namespace AloneHero_CSharp
     {
         private bool endGame;
         private bool windowOpen;
+        private RenderWindow PLAY;
         public delegate void OrderEventHandler(object sender, OrderEventArgs args);
         public event OrderEventHandler LoadGame;
         public event OrderEventHandler StatsMove;
@@ -70,27 +71,19 @@ namespace AloneHero_CSharp
         {
             if (args.Code == Codes.NEXT_LEVEL && level.LevelEnd)
             {
-                if (curLevel == levels.Count - 1)
-                {
-                    //MENU.Display();
-                    //return;
-                    windowOpen = false;
-                    endGame = true;
-                    return;
-                }
-                else
+                curLevel++;
+                if (curLevel < levels.Count)
                 {
                     Player player = level.GetPlayer();
-                    level = levels[++curLevel];
+                    level = levels[curLevel];
                     StatsMove += level.GetMessageEventHandler;
                     StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_NEXT_LVL, player, player));
                     StatsMove -= level.GetMessageEventHandler;
                 }
             }
-            if (args.Code == Codes.END_GAME)
+            if (args.Code == Codes.END_GAME || curLevel == levels.Count)
             {
-                windowOpen = false;
-                endGame = true;
+                PLAY.Close();
             }
         }
 
@@ -115,7 +108,7 @@ namespace AloneHero_CSharp
             {
                 window.Close();
                 endGame = false;
-                
+                return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Up))
             {
@@ -127,7 +120,10 @@ namespace AloneHero_CSharp
                 mainMenu.MoveDown();
                 return;
             }
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) endGame = true;
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Escape))
+            {
+                endGame = true;
+            }
             
             if (Keyboard.IsKeyPressed(Keyboard.Key.Enter) && windowOpen == false && endGame == false)
             {
@@ -137,7 +133,7 @@ namespace AloneHero_CSharp
                 if (x == 0)
                 {
                     windowOpen = true;
-                    RenderWindow PLAY = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
+                    PLAY = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
                     // window.Close();
 
                     Clock clock = new Clock();
@@ -181,7 +177,7 @@ namespace AloneHero_CSharp
                 if (x == 1)
                 {
                     windowOpen = true;
-                    RenderWindow PLAY = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
+                    PLAY = new RenderWindow(new VideoMode(1200, 800), "Alone Hero");
                     Clock clock = new Clock();
                     LoadGameSaves();
                     // Интерфейс
