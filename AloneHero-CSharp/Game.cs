@@ -68,18 +68,29 @@ namespace AloneHero_CSharp
 
         public void GetMessageEventHandler(object sender, OrderEventArgs args)
         {
+            if (args.Code == Codes.NEXT_LEVEL && level.LevelEnd)
+            {
+                if (curLevel == levels.Count - 1)
+                {
+                    //MENU.Display();
+                    //return;
+                    windowOpen = false;
+                    endGame = true;
+                    return;
+                }
+                else
+                {
+                    Player player = level.GetPlayer();
+                    level = levels[++curLevel];
+                    StatsMove += level.GetMessageEventHandler;
+                    StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_NEXT_LVL, player, player));
+                    StatsMove -= level.GetMessageEventHandler;
+                }
+            }
             if (args.Code == Codes.END_GAME)
             {
                 windowOpen = false;
                 endGame = true;
-            }
-            if (args.Code == Codes.NEXT_LEVEL && level.LevelEnd)
-            {
-                Player player = level.GetPlayer();
-                level = levels[++curLevel];
-                StatsMove += level.GetMessageEventHandler;
-                StatsMove?.Invoke(this, new OrderEventArgs(Codes.STATS_MOVE_NEXT_LVL, player, player));
-                StatsMove -= level.GetMessageEventHandler;
             }
         }
 
@@ -118,7 +129,7 @@ namespace AloneHero_CSharp
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Escape)) endGame = true;
             
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Enter) && windowOpen == false)
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Enter) && windowOpen == false && endGame == false)
             {
                
                 int x = mainMenu.MenuNum;

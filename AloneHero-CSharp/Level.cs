@@ -25,7 +25,6 @@ namespace AloneHero_CSharp
         private int width, height, tileWidth, tileHeight;
         private int firstTileID;
         private string fileNameTMX;
-        private FloatRect drawingBounds;
         private Texture tilesetImage;
         private List<ObjectLvl> objects;
         private List<Layer> layers;
@@ -427,8 +426,8 @@ namespace AloneHero_CSharp
                     // Переключение уровня
                     if (senderEntity is Player && senderEntity.GetRect().Intersects(GetObject("Chest").Rect))
                     {
-                        NextLevel?.Invoke(this, new OrderEventArgs(Codes.NEXT_LEVEL, 0, null));
                         LevelEnd = true;
+                        NextLevel?.Invoke(this, new OrderEventArgs(Codes.NEXT_LEVEL, 0, null));
                         break;
                         //EndGame?.Invoke(this, new OrderEventArgs(Codes.END_GAME, 0, null));
                     }
@@ -711,6 +710,7 @@ namespace AloneHero_CSharp
         public void Draw(RenderWindow window, float time)
         {
             player.Update(time, window, this);
+            // Смерть игрока
             if (player.State == States.DEATH)
             {
                 EndGame?.Invoke(this, new OrderEventArgs(Codes.END_GAME, 0, null));

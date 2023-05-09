@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="12">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="16">
  <tileset firstgid="1" source="Images/Tiles/castle-tileset.png"/>
  <layer id="2" name="Слой тайлов 2" width="100" height="30">
   <data>
@@ -3011,9 +3011,10 @@
   <object id="6" name="Solid" x="512.667" y="385" width="14.6667" height="64"/>
   <object id="7" name="Solid" x="801.333" y="416.667" width="14" height="31.6667"/>
   <object id="8" name="Player" x="673" y="408.5" width="16.75" height="19.25"/>
-  <object id="9" name="Skeleton" x="296" y="417" width="22" height="36"/>
-  <object id="10" name="enemyBarier" x="425" y="386.5" width="17" height="77.5"/>
-  <object id="11" name="enemyBarier" x="147.5" y="369" width="19" height="94"/>
+  <object id="11" name="Chest" x="848.583" y="430.667" width="31.3333" height="16.6667"/>
+  <object id="12" name="enemyBarier" x="237" y="361" width="20" height="104"/>
+  <object id="13" name="enemyBarier" x="417" y="337" width="32" height="127"/>
+  <object id="14" name="Skeleton" x="315" y="409" width="21" height="46"/>
  </objectgroup>
  <layer id="1" name="Слой тайлов 1" width="100" height="30">
   <data>
@@ -5770,8 +5771,8 @@
    <tile gid="1"/>
    <tile gid="30"/>
    <tile gid="30"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
+   <tile gid="31"/>
+   <tile gid="32"/>
    <tile gid="30"/>
    <tile gid="30"/>
    <tile gid="30"/>
