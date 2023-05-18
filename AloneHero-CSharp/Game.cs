@@ -24,13 +24,14 @@ namespace AloneHero_CSharp
 
         private RenderWindow MENU;
         private Menu mainMenu;
+        private Font font;
 
         public Game()
         {
             endGame = false;
             curLevel = 0;
             InitializeLevels();
-            
+            font = new Font("timesnewromanpsmt.ttf");
         }
 
         public bool StartGame()
@@ -223,7 +224,7 @@ namespace AloneHero_CSharp
                     {
                         ABOUT.DispatchEvents();
                         // Тут надписи
-                        Font font = new Font("timesnewromanpsmt.ttf");
+                        
                         Text text = new Text("Игра платформер о рыцаре.\nЦель игры пройти все уровни\nДвижение: WASD\nПрыжок: Space\nУдар: стрелки\nВернидуб Марк, 2-41\nИГЭУ, Иваново", font, 40);
                         ABOUT.Draw(text);
                         ABOUT.Display();
