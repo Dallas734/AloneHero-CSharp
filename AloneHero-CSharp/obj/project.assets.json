@@ -444,19 +444,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Aleksandr\\.nuget\\packages\\": {}
+    "C:\\Users\\Alexandr\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Aleksandr\\source\\repos\\AloneHero-CSharp\\AloneHero-CSharp\\AloneHero-CSharp.csproj",
+      "projectUniqueName": "C:\\Users\\Alexandr\\source\\repos\\AloneHero-CSharp\\AloneHero-CSharp\\AloneHero-CSharp.csproj",
       "projectName": "AloneHero-CSharp",
-      "projectPath": "C:\\Users\\Aleksandr\\source\\repos\\AloneHero-CSharp\\AloneHero-CSharp\\AloneHero-CSharp.csproj",
-      "packagesPath": "C:\\Users\\Aleksandr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Aleksandr\\source\\repos\\AloneHero-CSharp\\AloneHero-CSharp\\obj\\",
+      "projectPath": "C:\\Users\\Alexandr\\source\\repos\\AloneHero-CSharp\\AloneHero-CSharp\\AloneHero-CSharp.csproj",
+      "packagesPath": "C:\\Users\\Alexandr\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Alexandr\\source\\repos\\AloneHero-CSharp\\AloneHero-CSharp\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Aleksandr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Alexandr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -502,7 +507,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.413\\RuntimeIdentifierGraph.json"
       }
     }
   }

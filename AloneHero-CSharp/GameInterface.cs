@@ -39,6 +39,13 @@ namespace AloneHero_CSharp
             game.LoadGame += GetMessageEventHandler;
         }
 
+        internal Game Game
+        {
+            get => default;
+            set
+            {
+            }
+        }
 
         public void GetMessageEventHandler(object sender, OrderEventArgs args)
         {

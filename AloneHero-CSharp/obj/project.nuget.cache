@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "aY6LJEVUcpcvH4/9ol50lFRVoqtvG0AUydFSDQGryF+lI7McLQ7QTPv9Z8e9f42WW90B6YTNoEZsCtoKET8LLA==",
+  "dgSpecHash": "oKD3zFS0nCK6TWoHyRlW7IEOyIhZrK2tWaX7PGlD3Z+g0iZC/Kz2HXtUMFmGUSZxvChv3wuXogYQr08Tx7S1nQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Aleksandr\\source\\repos\\AloneHero-CSharp\\AloneHero-CSharp\\AloneHero-CSharp.csproj",
+  "projectFilePath": "C:\\Users\\Alexandr\\source\\repos\\AloneHero-CSharp\\AloneHero-CSharp\\AloneHero-CSharp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Aleksandr\\.nuget\\packages\\csfml\\2.5.0\\csfml.2.5.0.nupkg.sha512",
-    "C:\\Users\\Aleksandr\\.nuget\\packages\\sfml.audio\\2.5.0\\sfml.audio.2.5.0.nupkg.sha512",
-    "C:\\Users\\Aleksandr\\.nuget\\packages\\sfml.graphics\\2.5.0\\sfml.graphics.2.5.0.nupkg.sha512",
-    "C:\\Users\\Aleksandr\\.nuget\\packages\\sfml.net\\2.5.0\\sfml.net.2.5.0.nupkg.sha512",
-    "C:\\Users\\Aleksandr\\.nuget\\packages\\sfml.system\\2.5.0\\sfml.system.2.5.0.nupkg.sha512",
-    "C:\\Users\\Aleksandr\\.nuget\\packages\\sfml.window\\2.5.0\\sfml.window.2.5.0.nupkg.sha512"
+    "C:\\Users\\Alexandr\\.nuget\\packages\\csfml\\2.5.0\\csfml.2.5.0.nupkg.sha512",
+    "C:\\Users\\Alexandr\\.nuget\\packages\\sfml.audio\\2.5.0\\sfml.audio.2.5.0.nupkg.sha512",
+    "C:\\Users\\Alexandr\\.nuget\\packages\\sfml.graphics\\2.5.0\\sfml.graphics.2.5.0.nupkg.sha512",
+    "C:\\Users\\Alexandr\\.nuget\\packages\\sfml.net\\2.5.0\\sfml.net.2.5.0.nupkg.sha512",
+    "C:\\Users\\Alexandr\\.nuget\\packages\\sfml.system\\2.5.0\\sfml.system.2.5.0.nupkg.sha512",
+    "C:\\Users\\Alexandr\\.nuget\\packages\\sfml.window\\2.5.0\\sfml.window.2.5.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -91,5 +91,13 @@ namespace AloneHero_CSharp
         {
             UsedEvent?.Invoke(this, args);
         }
+
+        internal Level Level
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

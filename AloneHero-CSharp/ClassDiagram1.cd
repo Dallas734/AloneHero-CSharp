@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AloneHero_CSharp.Player">
+    <Position X="1" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARIAAABAhAAAAAAAAEACAgAQAAAAAAAAAAAAAAAEAE=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.Entity">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="AloneHero_CSharp.Entity.OrderEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Entity.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQEKADAhIAxEk0AACIAAEgBFQHAAiggAAEABgCAcAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.Enemy">
+    <Position X="6.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kAQAAAAEIQAAACAAAAAAAAgAAAAAAgAAAAAAAAAAEAA=</HashCode>
+      <FileName>Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.Game">
+    <Position X="10.75" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="AloneHero_CSharp.Game.OrderEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIQYAAEAACQAAAAAAACAQAgAAEIEAABABAAAAAAEEk=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Menu" />
+      <Property Name="Level" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AloneHero_CSharp.Menu">
+    <Position X="13.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMAAAAAQAAAAgAAAAAAAAAAAAAAFAAAQAAAAAAAIAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.Level">
+    <Position X="16" Y="1.25" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="AloneHero_CSharp.Level.OrderEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Level.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <AssociationLine Name="Entity" Type="AloneHero_CSharp.Entity" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16" Y="6.812" />
+        <Point X="11.583" Y="6.812" Type="JumpStart" />
+        <Point X="11.417" Y="6.812" Type="JumpEnd" />
+        <Point X="10.75" Y="6.812" />
+        <Point X="10.75" Y="6.812" />
+        <Point X="5.5" Y="6.812" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>MSIAABEEAEAAIgQEQAUCAAZAAQAgACABEQBAFEEUEIE=</HashCode>
+      <FileName>Level.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Entity" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AloneHero_CSharp.SupportItem">
+    <Position X="18.75" Y="1.25" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="AloneHero_CSharp.SupportItem.OrderEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SupportItem.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAJAAAIQAAAAQAQAAAAAAQEEAAAggRAABgQgBAEEA=</HashCode>
+      <FileName>SupportItem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Level" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AloneHero_CSharp.Coin">
+    <Position X="21.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Coin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.GreenPotion">
+    <Position X="22" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GreenPotion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.RedPotion">
+    <Position X="22" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RedPotion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.GameInterface">
+    <Position X="10.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIIAAAAAAAAAAgAIACAAAAAgAAwAAAAAAQBgIAAJEAA=</HashCode>
+      <FileName>GameInterface.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Game" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AloneHero_CSharp.Skeleton">
+    <Position X="9" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Skeleton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.Goblin">
+    <Position X="9" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Goblin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.Mushroom">
+    <Position X="8.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mushroom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

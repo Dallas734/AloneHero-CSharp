@@ -225,7 +225,7 @@ namespace AloneHero_CSharp
                         ABOUT.DispatchEvents();
                         // Тут надписи
                         
-                        Text text = new Text("Игра платформер о рыцаре.\nЦель игры пройти все уровни\nДвижение: WASD\nПрыжок: Space\nУдар: стрелки\nВернидуб Марк, 2-41\nИГЭУ, Иваново", font, 40);
+                        Text text = new Text("Игра платформер о рыцаре.\nЦель игры пройти все уровни.\nУровень оканчивается сундуком. При соприкосновении с ним \nпроисходит переход на новый уровень.\nЗеленое зелье увеличивает скорость\nКрасное зелье восстанавливает или повышает здоровье.\nДвижение: WASD\nПрыжок: Space\nУдар: стрелки\nВернидуб Марк, 2-41\nИГЭУ, Иваново", font, 40);
                         ABOUT.Draw(text);
                         ABOUT.Display();
                     }
@@ -429,6 +429,22 @@ namespace AloneHero_CSharp
             {
                 level1.EndGame += GetMessageEventHandler;
                 level1.NextLevel += GetMessageEventHandler;
+            }
+        }
+
+        internal Menu Menu
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal Level Level
+        {
+            get => default;
+            set
+            {
             }
         }
     }

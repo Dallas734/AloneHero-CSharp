@@ -816,5 +816,13 @@ namespace AloneHero_CSharp
         {
             return supportItems;
         }
+
+        internal Entity Entity
+        {
+            get => default;
+            set
+            {
+            }
+        }
     } 
 }
