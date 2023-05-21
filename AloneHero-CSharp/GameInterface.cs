@@ -25,7 +25,8 @@ namespace AloneHero_CSharp
 
         public GameInterface(Game game)
         {
-            font = new Font("timesnewromanpsmt.ttf");
+            //font = new Font("timesnewromanpsmt.ttf");
+            font = new Font(Fonts_r.timesnewromanpsmt);
             heartImage = new Image("Images\\Interface\\Heart.png");
             speedImage = new Image("Images\\Interface\\Energy.png");
             coinImage = new Image("Images\\Interface\\Coin.png");
@@ -37,14 +38,6 @@ namespace AloneHero_CSharp
             coinSprite = new Sprite(coinTexture);
             // Подписка
             game.LoadGame += GetMessageEventHandler;
-        }
-
-        internal Game Game
-        {
-            get => default;
-            set
-            {
-            }
         }
 
         public void GetMessageEventHandler(object sender, OrderEventArgs args)

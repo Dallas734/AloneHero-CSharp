@@ -12,7 +12,7 @@ namespace AloneHero_CSharp
     abstract class Enemy : Entity
     {
         public event OrderEventHandler AdditionalFeatEvent;
-        public bool CollisionWithPlayer { get; set; }
+        public bool CollisionWithPlayer { get; protected set; }
         public double DefaultX { get; set; }
         public double DefaultY { get; set; }
 

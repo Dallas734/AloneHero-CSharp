@@ -19,7 +19,7 @@ namespace AloneHero_CSharp
         public  double X { get; protected set; }
         public double Y { get; protected set; }
 
-        public int Counter { get; set; }
+        public int Counter { get; protected set; }
 
         public int Width { get; protected set; }
         public int Height { get; protected set; }
@@ -42,7 +42,7 @@ namespace AloneHero_CSharp
 
         protected string directory; // Имя директории, где хранятся анимации
         protected Dictionary<States, Sprite> sprites; // Спрайты
-        public States State { set; get; }
+        public States State { protected set; get; }
 
         protected Image image; // Картинка для создания спрайтов
         protected Texture texture; // Текстура для создания спрайтов
@@ -93,7 +93,7 @@ namespace AloneHero_CSharp
             }
         }
 
-        public void SetSprite(String fileName, States spriteName, int xBeginSprite, int yBeginSprite, int width, int height)
+        protected void SetSprite(String fileName, States spriteName, int xBeginSprite, int yBeginSprite, int width, int height)
         {
             image = new Image("Images\\" + this.directory + fileName);
             texture = new Texture(image);

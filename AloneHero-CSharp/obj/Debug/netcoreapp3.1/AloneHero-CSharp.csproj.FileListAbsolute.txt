@@ -152,3 +152,5 @@ C:\Users\Aleksandr\source\repos\AloneHero-CSharp\AloneHero-CSharp\obj\Debug\netc
 C:\Users\Aleksandr\source\repos\AloneHero-CSharp\AloneHero-CSharp\obj\Debug\netcoreapp3.1\AloneHero-CSharp.dll
 C:\Users\Aleksandr\source\repos\AloneHero-CSharp\AloneHero-CSharp\obj\Debug\netcoreapp3.1\AloneHero-CSharp.pdb
 C:\Users\Aleksandr\source\repos\AloneHero-CSharp\AloneHero-CSharp\obj\Debug\netcoreapp3.1\AloneHero-CSharp.genruntimeconfig.cache
+C:\Users\Alexandr\source\repos\AloneHero-CSharp\AloneHero-CSharp\obj\Debug\netcoreapp3.1\AloneHero_CSharp.Fonts_r.resources
+C:\Users\Alexandr\source\repos\AloneHero-CSharp\AloneHero-CSharp\obj\Debug\netcoreapp3.1\AloneHero-CSharp.csproj.GenerateResource.cache

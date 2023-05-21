@@ -22,7 +22,8 @@ namespace AloneHero_CSharp
             background.Scale = new Vector2f(width / imageBG.Size.X, height / imageBG.Size.Y);
 
             MenuNum = 0;
-            font = new Font("timesnewromanpsmt.ttf");
+            //font = new Font("timesnewromanpsmt.ttf");
+            font = new Font(Fonts_r.timesnewromanpsmt);
             mainMenu = new List<Text>();
 
             title = new Text("ALONE HERO", font, 100);

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.IO;
 using SFML.Graphics;
 using SFML.Window;
 using SFML.System;
+using System.Runtime.InteropServices;
 
 namespace AloneHero_CSharp
 {
     class Program
     {
+       
         static void Main(string[] args)
         {
             //var window = new SimpleWindow();

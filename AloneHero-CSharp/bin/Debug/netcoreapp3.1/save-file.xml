@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <level curLevel="0">
-  <player x="460,23062586784516" y="296" Health="290" Speed="0,1" Coins="120" Strenght="50" />
+  <player x="179,3638748645783" y="360" Health="300" Speed="0,1" Coins="0" Strenght="50" />
   <enemies>
-    <enemy x="542,7738009262064" y="409" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="511" yDefault="405" />
-    <enemy x="1376" y="298" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="1426" yDefault="310" />
-    <enemy x="1947,2528989028874" y="420" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="1972" yDefault="422" />
-    <enemy x="1219" y="314" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="894" yDefault="304" />
-    <enemy State="Death" iterNum="4" />
+    <enemy x="484,90180027008046" y="409" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="511" yDefault="405" />
+    <enemy x="1405,4896996688844" y="298" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="1426" yDefault="310" />
+    <enemy x="1904,004099998474" y="420" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="1972" yDefault="422" />
+    <enemy x="850,745000114442" y="314" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="865" yDefault="306" />
+    <enemy x="300,5866000747677" y="344" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="350" yDefault="336" />
   </enemies>
   <supportItems>
     <supportItem Used="false" xDefault="340" yDefault="423" />
+    <supportItem Used="false" xDefault="1395" yDefault="326" />
     <supportItem Used="false" xDefault="288" yDefault="420" />
-    <supportItem Used="true" />
-    <supportItem Used="true" />
-    <supportItem Used="true" />
-    <supportItem Used="true" />
-    <supportItem Used="true" />
+    <supportItem Used="false" xDefault="1294" yDefault="268" />
+    <supportItem Used="false" xDefault="1161" yDefault="204" />
+    <supportItem Used="false" xDefault="669" yDefault="318" />
+    <supportItem Used="false" xDefault="959" yDefault="322" />
+    <supportItem Used="false" xDefault="2038" yDefault="416" />
   </supportItems>
 </level>

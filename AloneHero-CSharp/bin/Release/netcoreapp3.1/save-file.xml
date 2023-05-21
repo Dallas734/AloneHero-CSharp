@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<level curLevel="0">
+  <player x="201,87324967384322" y="360" Health="300" Speed="0,1" Coins="0" Strenght="50" />
+  <enemies>
+    <enemy x="488,9424002838138" y="409" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="511" yDefault="405" />
+    <enemy x="1401,5747000122078" y="298" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="1426" yDefault="310" />
+    <enemy x="1899,7169001007085" y="420" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="1972" yDefault="422" />
+    <enemy x="846,8656999969492" y="314" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="865" yDefault="306" />
+    <enemy x="303,66510002136204" y="344" Health="300" Speed="0,08" Strength="50" State="Alive" xDefault="350" yDefault="336" />
+  </enemies>
+  <supportItems>
+    <supportItem Used="false" xDefault="340" yDefault="423" />
+    <supportItem Used="false" xDefault="1395" yDefault="326" />
+    <supportItem Used="false" xDefault="288" yDefault="420" />
+    <supportItem Used="false" xDefault="1294" yDefault="268" />
+    <supportItem Used="false" xDefault="1161" yDefault="204" />
+    <supportItem Used="false" xDefault="669" yDefault="318" />
+    <supportItem Used="false" xDefault="959" yDefault="322" />
+    <supportItem Used="false" xDefault="2038" yDefault="416" />
+  </supportItems>
+</level>

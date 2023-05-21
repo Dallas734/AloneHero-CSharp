@@ -11,9 +11,9 @@ namespace AloneHero_CSharp
     {
         public Layer()
         {
-            tiles = new List<Sprite>();
+            Tiles = new List<Sprite>();
         }
-        public int opacity;
-        public List<Sprite> tiles;
+        public int Opacity { get; set; }
+        public List<Sprite> Tiles { get; set; }
     }
 }

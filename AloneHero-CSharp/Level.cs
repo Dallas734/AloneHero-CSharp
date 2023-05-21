@@ -28,7 +28,6 @@ namespace AloneHero_CSharp
         private Texture tilesetImage;
         private List<ObjectLvl> objects;
         private List<Layer> layers;
-        private Font font;
         public bool LevelEnd { get; private set; }
 
         private bool collisionWithPlayer;
@@ -47,7 +46,6 @@ namespace AloneHero_CSharp
             collisionWithPlayer = false;
             sizeOfView.X = 600;
             sizeOfView.Y = 400;
-            font = new Font("timesnewromanpsmt.ttf");
             //Добавление обработчика событий (подписка на это событие). Подписка на игрока
             player.SomeActionEvent += GetMessageEventHandler;
             //game.StatsMove += GetMessageEventHandler;
@@ -132,11 +130,11 @@ namespace AloneHero_CSharp
                 if (layerElement.GetAttribute("opacity") != null && layerElement.GetAttribute("opacity") != "")
                 {
                     float opacity = float.Parse(layerElement.GetAttribute("opacity"));
-                    layer.opacity = 255 * (int)opacity;
+                    layer.Opacity = 255 * (int)opacity;
                 }
                 else
                 {
-                    layer.opacity = 255;
+                    layer.Opacity = 255;
                 }
 
                 // Контейнер data
@@ -177,7 +175,7 @@ namespace AloneHero_CSharp
                             sprite.Position = new Vector2f(x * tileWidth, y * tileHeight);
                             //sprite.setColor(sf::Color(255, 255, 255, layer.opacity));
 
-                            layer.tiles.Add(sprite);//закидываем в слой спрайты тайлов
+                            layer.Tiles.Add(sprite);//закидываем в слой спрайты тайлов
                         }
 
                         x++;
@@ -218,8 +216,6 @@ namespace AloneHero_CSharp
 
                         int x = (int)Single.Parse(objectElement.GetAttribute("x"), CultureInfo.InvariantCulture);
                         int y = (int)Single.Parse(objectElement.GetAttribute("y"), CultureInfo.InvariantCulture); ;
-                        //int.TryParse(objectElement.GetAttribute("x"), out x);
-                        //int.TryParse(objectElement.GetAttribute("y"), out y);
 
                         int width;
                         int height;
@@ -241,14 +237,13 @@ namespace AloneHero_CSharp
                             sprite.TextureRect = subRects[int.Parse(objectElement.GetAttribute("gid")) - firstTileID];
                         }
 
-                        // Экземпляр объекта
-                        ObjectLvl objectlvl = new ObjectLvl();
-                        objectlvl.Name = objectName;
-                        objectlvl.Type = objectType;
-                        objectlvl.Sprite = sprite;
-
                         FloatRect objectRect = new FloatRect(x, y, width, height);
-                        objectlvl.Rect = objectRect;
+                        // Экземпляр объекта
+                        ObjectLvl objectlvl = new ObjectLvl(objectName, objectType, sprite, objectRect);
+                        //objectlvl.Name = objectName;
+                        //objectlvl.Type = objectType;
+                        //objectlvl.Sprite = sprite;
+                        //objectlvl.Rect = objectRect;
 
                         objects.Add(objectlvl);
 
@@ -534,23 +529,7 @@ namespace AloneHero_CSharp
                 {
                     LoadEnemy?.Invoke(null, args);
                 }
-                //for (int i = 0; i < enemies.Count; i++ )
-                //{
-                //    if (enemyArgs.DefaultX == enemies[i].DefaultX && enemyArgs.DefaultY == enemies[i].DefaultY && enemyArgs.Health == 0)
-                //    {
-                //        enemies[i] = null;
-                //    }
-                //    else
-                //    {
-                //        LoadEnemy?.Invoke(null, args);
-                //    }
-                //}
             }
-
-            //if (args.Code == Codes.ENEMY_STATS_MOVE)
-            //{
-            //    ChangeParamEvent?.Invoke(null, args);
-            //}    
         }
 
         public void GetMessage(Message message)
@@ -729,19 +708,9 @@ namespace AloneHero_CSharp
                 if (enemies[i] != null && enemies[i].State == States.DEATH && enemies[i].Counter > 1)
                 {
                     enemies[i] = null;
-                    //enemies.Remove(enemy);
                     return;
                 }
             }
-
-            //foreach (Enemy enemy in enemies)
-            //{
-            //    if (enemy.State == States.DEATH && enemy.Counter > 1)
-            //    {
-            //        enemies.Remove(enemy);
-            //        return;
-            //    }
-            //}
 
             // Проходимся по предметам поддержки
             for (int i = 0; i < supportItems.Count; i++)
@@ -753,16 +722,6 @@ namespace AloneHero_CSharp
                 }
             }
 
-            //foreach (SupportItem supportItem in supportItems)
-            //{
-            //    supportItem.Update(time, window);
-            //    if (supportItem.Used)
-            //    {
-            //        supportItems.Remove(supportItem);
-            //        return;
-            //    }
-            //}
-
 
             // Отрисовка
             window.SetView(view);
@@ -770,12 +729,9 @@ namespace AloneHero_CSharp
 
             // рисуем все тайлы (объекты не рисуем!)
             for (int layer = 0; layer < layers.Count; layer++)
-                for (int tile = 0; tile < layers[layer].tiles.Count; tile++)
-                    window.Draw(layers[layer].tiles[tile]);
+                for (int tile = 0; tile < layers[layer].Tiles.Count; tile++)
+                    window.Draw(layers[layer].Tiles[tile]);
 
-            // Рисуем здоровье
-            //window.Draw(heartSprite);
-            //window.Draw(text);
 
             // Рисуем персонажа
             window.Draw(player.GetSprite(player.State));
@@ -784,15 +740,7 @@ namespace AloneHero_CSharp
             foreach (Enemy enemy in enemies)
             {
                 if (enemy != null) window.Draw(enemy.GetSprite(enemy.State));
-            }
-            //foreach (Enemy enemy in enemies)
-            //{
-            //    if (enemy.State == States.DEATH)
-            //    {
-            //        enemies.Remove(enemy);
-            //        return;
-            //    }
-            //}
+            }       
 
             // Рисуем предметы поддержки
             foreach (SupportItem supportItem in supportItems)
@@ -818,6 +766,30 @@ namespace AloneHero_CSharp
         }
 
         internal Entity Entity
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal SupportItem SupportItem
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal ObjectLvl ObjectLvl
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal Layer Layer
         {
             get => default;
             set

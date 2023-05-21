@@ -6,7 +6,6 @@ namespace AloneHero_CSharp
 {
     class Mushroom : Enemy
     {
-        private int xBeginSpriteDamage;
         public Mushroom(double x, double y, double speed, int health, int strength, Level level) : base(x, y, speed, health, strength, level)
         {
             directory = "Enemies\\Mushroom\\";

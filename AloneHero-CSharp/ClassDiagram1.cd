@@ -38,12 +38,13 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAIQYAAEAACQAAAAAAACAQAgAAEIEAABABAAAAAAEEk=</HashCode>
+      <HashCode>AAIQYAAEAACYAAAAAAACAQAgAAEIEAABABAAAAAAEEk=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Menu" />
       <Property Name="Level" />
+      <Property Name="GameInterface" />
     </ShowAsAssociation>
   </Class>
   <Class Name="AloneHero_CSharp.Menu">
@@ -62,22 +63,15 @@
         </TypeIdentifier>
       </Delegate>
     </NestedTypes>
-    <AssociationLine Name="Entity" Type="AloneHero_CSharp.Entity" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="16" Y="6.812" />
-        <Point X="11.583" Y="6.812" Type="JumpStart" />
-        <Point X="11.417" Y="6.812" Type="JumpEnd" />
-        <Point X="10.75" Y="6.812" />
-        <Point X="10.75" Y="6.812" />
-        <Point X="5.5" Y="6.812" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>MSIAABEEAEAAIgQEQAUCAAZAAQAgACABEQBAFEEUEIE=</HashCode>
+      <HashCode>MSAAABEEAEAAIgQEQAUCAAZAAQAkACAFEQBAFEkUEIE=</HashCode>
       <FileName>Level.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Entity" />
+      <Property Name="SupportItem" />
+      <Property Name="ObjectLvl" />
+      <Property Name="Layer" />
     </ShowAsAssociation>
   </Class>
   <Class Name="AloneHero_CSharp.SupportItem">
@@ -90,12 +84,9 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAQAJAAAIQAAAAQAQAAAAAAQEEAAAggRAABgQgBAEEA=</HashCode>
+      <HashCode>AAQAJAAAIQAAAAQAQAAAAAAQEEAAAggQAABgQgBAEEA=</HashCode>
       <FileName>SupportItem.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Level" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="AloneHero_CSharp.Coin">
     <Position X="21.75" Y="1.25" Width="1.5" />
@@ -119,14 +110,11 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AloneHero_CSharp.GameInterface">
-    <Position X="10.75" Y="7" Width="1.5" />
+    <Position X="10.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIIAAAAAAAAAAgAIACAAAAAgAAwAAAAAAQBgIAAJEAA=</HashCode>
+      <HashCode>AIIAAAAAAAAAAgAIACAAAAAgAAQAAAAAAQBgIAAJEAA=</HashCode>
       <FileName>GameInterface.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Game" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="AloneHero_CSharp.Skeleton">
     <Position X="9" Y="0.75" Width="1.5" />
@@ -147,6 +135,20 @@
     <TypeIdentifier>
       <HashCode>gAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mushroom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.ObjectLvl">
+    <Position X="18.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAACAAAAAQAQAAAAAAAAA=</HashCode>
+      <FileName>ObjectLvl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AloneHero_CSharp.Layer">
+    <Position X="13.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Layer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

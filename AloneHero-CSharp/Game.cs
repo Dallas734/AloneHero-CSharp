@@ -28,10 +28,11 @@ namespace AloneHero_CSharp
 
         public Game()
         {
+            font = new Font(Fonts_r.timesnewromanpsmt);
             endGame = false;
             curLevel = 0;
             InitializeLevels();
-            font = new Font("timesnewromanpsmt.ttf");
+            //font = new Font("timesnewromanpsmt.ttf");
         }
 
         public bool StartGame()
@@ -84,6 +85,7 @@ namespace AloneHero_CSharp
             }
             if (args.Code == Codes.END_GAME || curLevel == levels.Count)
             {
+                windowOpen = false;
                 PLAY.Close();
             }
         }
@@ -109,6 +111,7 @@ namespace AloneHero_CSharp
             {
                 window.Close();
                 endGame = false;
+                windowOpen = false;
                 return;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Up))
@@ -125,6 +128,7 @@ namespace AloneHero_CSharp
             {
                 endGame = true;
             }
+            
             
             if (Keyboard.IsKeyPressed(Keyboard.Key.Enter) && windowOpen == false && endGame == false)
             {
@@ -225,7 +229,7 @@ namespace AloneHero_CSharp
                         ABOUT.DispatchEvents();
                         // Тут надписи
                         
-                        Text text = new Text("Игра платформер о рыцаре.\nЦель игры пройти все уровни.\nУровень оканчивается сундуком. При соприкосновении с ним \nпроисходит переход на новый уровень.\nЗеленое зелье увеличивает скорость\nКрасное зелье восстанавливает или повышает здоровье.\nДвижение: WASD\nПрыжок: Space\nУдар: стрелки\nВернидуб Марк, 2-41\nИГЭУ, Иваново", font, 40);
+                        Text text = new Text("Игра платформер о рыцаре.\nЦель игры пройти все уровни.\nУровень оканчивается сундуком. При соприкосновении с ним \nпроисходит переход на новый уровень.\nЗеленое зелье увеличивает скорость\nКрасное зелье восстанавливает или повышает здоровье.\nДвижение: WASD\nПрыжок: Space\nУдар: стрелки\nСохранение: F5\nВернидуб Марк, 2-41\nИГЭУ, Иваново", font, 40);
                         ABOUT.Draw(text);
                         ABOUT.Display();
                     }
@@ -233,6 +237,7 @@ namespace AloneHero_CSharp
 
                 if (x == 3)
                 {
+                    window.Close();
                     endGame = true;
                 }
 
@@ -441,6 +446,14 @@ namespace AloneHero_CSharp
         }
 
         internal Level Level
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal GameInterface GameInterface
         {
             get => default;
             set
